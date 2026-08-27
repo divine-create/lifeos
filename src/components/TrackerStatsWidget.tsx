@@ -1,4 +1,4 @@
-﻿import { Flame, CheckCircle2, TrendingUp } from "lucide-react";
+import { Flame, CheckCircle2, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 export function TrackerStatsWidget({ trackers }: { trackers: any[] }) {
@@ -40,7 +40,7 @@ export function TrackerStatsWidget({ trackers }: { trackers: any[] }) {
           <span className="text-sm font-bold text-gray-900">{completionRate}%</span>
         </div>
         <div className="w-full bg-gray-100 rounded-full h-2.5 mb-6">
-          <div className="bg-green-500 h-2.5 rounded-full transition-all" style={{ width: \\%\ }}></div>
+          <div className="bg-green-500 h-2.5 rounded-full transition-all" style={{ width: `${completionRate}%` }}></div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
