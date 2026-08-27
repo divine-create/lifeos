@@ -14,13 +14,13 @@ import {
   Target,
   CheckCircle2,
   Circle,
-  Activity,
+  
   Zap,
   CheckSquare,
   ShieldCheck,
   Plus,
   ArrowRight,
-  LogIn,
+  
   Clock,
   Flame,
   Check,

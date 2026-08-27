@@ -1,11 +1,11 @@
 import { getTasks, getActivities } from "@/app/actions";
-import { CheckCircle2, Clock } from "lucide-react";
+
 
 export async function DashboardWidgets() {
   const [tasks, activities] = await Promise.all([getTasks(), getActivities()]);
 
   const activeTasks = tasks.filter(t => t.status !== "Done");
-  const overdueTasks = activeTasks.filter(t => t.deadline && new Date(t.deadline) < new Date());
+  const overdueTasks = activeTasks.filter(t => t.deadline && t.deadline < new Date());
 
   // Simple Heatmap calculation
   const today = new Date();
@@ -17,7 +17,7 @@ export async function DashboardWidgets() {
 
   const activityMap = activities.reduce((acc: any, act) => {
     const dateStr = act.createdAt.toISOString().split("T")[0];
-    acc[dateStr] = (acc[dateStr] || 0) + act.duration;
+    acc[dateStr] = (acc[dateStr] || 0) + (act.actualDuration || 0);
     return acc;
   }, {});
 
@@ -41,7 +41,7 @@ export async function DashboardWidgets() {
               <li key={task.id} className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm font-semibold text-gray-900">{task.title}</p>
-                  <p className="text-xs text-red-600 font-medium">Overdue: {new Date(task.deadline!).toLocaleDateString()}</p>
+                  <p className="text-xs text-red-600 font-medium">Overdue: {task.deadline!.toLocaleDateString()}</p>
                 </div>
               </li>
             ))}

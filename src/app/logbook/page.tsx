@@ -1,4 +1,4 @@
-import { Activity as ActivityIcon, CheckCircle2, Zap, Target } from "lucide-react";
+import { CheckCircle2, Zap, Target } from "lucide-react";
 import { getActivities, getTasks, getGoals } from "@/app/actions";
 
 export default async function LogbookPage() {
@@ -23,9 +23,9 @@ export default async function LogbookPage() {
     ...activities.map(a => ({
       id: a.id,
       type: "Focus" as const,
-      title: a.title,
+      title: a.type,
       date: a.createdAt,
-      meta: `${a.duration} mins`,
+      meta: `${a.actualDuration || 0} mins`,
     })),
     ...completedTasks.map(t => ({
       id: t.id,

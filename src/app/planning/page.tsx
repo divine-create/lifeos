@@ -1,5 +1,5 @@
 import { Target, Flag, FolderKanban, Plus, Trash2, CheckCircle2, Circle, ChevronRight } from "lucide-react";
-import { getGoals, getGoalTypes, createGoal, createMilestone, createProject, createTask, toggleTaskStatus, deleteGoal, updateGoal } from "@/app/actions";
+import { getGoals, getGoalTypes, createGoal, createMilestone, createProject, createTask, toggleTaskStatus, deleteGoal } from "@/app/actions";
 
 export default async function PlanningHubPage() {
   const goals = await getGoals();
