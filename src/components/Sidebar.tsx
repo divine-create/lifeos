@@ -38,9 +38,7 @@ export function Sidebar() {
     {
       title: "EXECUTION",
       items: [
-        { name: "Schedule", href: "/schedule", icon: Calendar, color: "text-blue-500" },
-        { name: "Tasks", href: "/tasks", icon: CheckSquare, color: "text-emerald-500" },
-        { name: "Focus Timer", href: "/focus", icon: Timer, color: "text-pink-500" },
+        { name: "Today & Focus", href: "/execution", icon: CheckSquare, color: "text-emerald-500" },
       ]
     },
     {

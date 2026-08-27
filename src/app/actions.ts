@@ -101,7 +101,7 @@ export async function createTask(formData: FormData) {
         : null,
     },
   });
-  revalidatePath("/tasks");
+  revalidatePath("/execution");
   revalidatePath("/milestones");
   revalidatePath("/projects");
   revalidatePath("/goals");
@@ -115,7 +115,7 @@ export async function toggleTaskStatus(taskId: string, currentStatus: string) {
     where: { id: taskId, userId },
     data: { status: currentStatus === "Done" ? "Todo" : "Done" },
   });
-  revalidatePath("/tasks");
+  revalidatePath("/execution");
   revalidatePath("/milestones");
   revalidatePath("/projects");
   revalidatePath("/");
@@ -125,7 +125,7 @@ export async function deleteTask(taskId: string) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
   await prisma.task.delete({ where: { id: taskId, userId } });
-  revalidatePath("/tasks");
+  revalidatePath("/execution");
   revalidatePath("/");
 }
 
@@ -368,7 +368,7 @@ export async function createScheduleSlot(formData: FormData) {
       status: "pending",
     },
   });
-  revalidatePath("/schedule");
+  revalidatePath("/execution");
 }
 
 export async function updateScheduleSlotStatus(id: string, status: string) {
@@ -379,7 +379,7 @@ export async function updateScheduleSlotStatus(id: string, status: string) {
     where: { id, userId },
     data: { status },
   });
-  revalidatePath("/schedule");
+  revalidatePath("/execution");
 }
 
 export async function deleteScheduleSlot(id: string) {
@@ -389,7 +389,7 @@ export async function deleteScheduleSlot(id: string) {
   await prisma.scheduleSlot.delete({
     where: { id, userId },
   });
-  revalidatePath("/schedule");
+  revalidatePath("/execution");
 }
 
 // ─── FOCUS TIMER ───────────────────────────────────

@@ -78,7 +78,7 @@ export function FocusTimerClient({ tasks }: { tasks: Task[] }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-12">
+    <div className="flex flex-col items-center justify-center w-full space-y-8">
       <div className="w-full max-w-sm space-y-4">
         
         <select
@@ -117,11 +117,11 @@ export function FocusTimerClient({ tasks }: { tasks: Task[] }) {
         )}
       </div>
 
-      <div className="relative flex items-center justify-center w-72 h-72 rounded-full border-[10px] border-white shadow-inner bg-white">
+      <div className="relative flex items-center justify-center w-56 h-56 rounded-full border-8 border-white shadow-inner bg-white">
         {isActive && (
-          <div className="absolute inset-0 rounded-full border-[10px] border-blue-600 opacity-20 animate-ping" />
+          <div className="absolute inset-0 rounded-full border-8 border-blue-600 opacity-20 animate-ping" />
         )}
-        <div className="absolute font-mono text-7xl font-bold tracking-tighter text-blue-600">
+        <div className="absolute font-mono text-5xl font-bold tracking-tighter text-blue-600">
           {formatTime(seconds)}
         </div>
       </div>
