@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache";import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -493,5 +493,5 @@ export async function updateGoal(id: string, formData: FormData) {
   });
   revalidatePath("/planning");
   revalidatePath("/");
+  redirect("/planning");
 }
-

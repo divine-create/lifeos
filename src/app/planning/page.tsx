@@ -1,7 +1,7 @@
-import { Target, Flag, FolderKanban, Plus, Trash2, CheckCircle2, Circle, ChevronRight } from "lucide-react";
-import { getGoals, getGoalTypes, createGoal, createMilestone, createProject, createTask, toggleTaskStatus, deleteGoal } from "@/app/actions";
+import { Target, Flag, FolderKanban, Plus, Trash2, CheckCircle2, Circle, ChevronRight, Pencil } from "lucide-react";import Link from "next/link";
+import { getGoals, getGoalTypes, createGoal, createMilestone, createProject, createTask, toggleTaskStatus, deleteGoal, updateGoal } from "@/app/actions";
 
-export default async function PlanningHubPage() {
+export default async function PlanningHubPage({ searchParams }: { searchParams: { edit?: string } }) {
   const goals = await getGoals();
   const goalTypes = await getGoalTypes();
 
@@ -69,10 +69,48 @@ export default async function PlanningHubPage() {
         <div className="space-y-6">
           {goals.map((goal) => {
             const deleteAction = deleteGoal.bind(null, goal.id);
+            const updateAction = updateGoal.bind(null, goal.id);
             const progress = Math.min(100, Math.max(0, Math.round(goal.progress || 0)));
+            const isEditing = searchParams.edit === goal.id;
             
             return (
-              <details key={goal.id} className="group rounded-xl border bg-white shadow-sm overflow-hidden" open>
+              <details key={goal.id} className="group rounded-xl border bg-white shadow-sm overflow-hidden" open={!isEditing}>
+                {isEditing ? (
+                  <div className="p-6 border-b border-gray-100 bg-blue-50/30">
+                    <form action={updateAction} className="space-y-4">
+                      <div>
+                        <label className="text-xs font-semibold text-gray-500 uppercase">Goal Title</label>
+                        <input name="title" defaultValue={goal.title} required className="mt-1 w-full text-lg font-bold bg-white border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900" />
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-gray-500 uppercase">Description</label>
+                        <textarea name="description" defaultValue={goal.description || ""} rows={2} className="mt-1 w-full text-sm bg-white border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900" />
+                      </div>
+                      <div className="flex gap-4">
+                        <div className="flex-1">
+                          <label className="text-xs font-semibold text-gray-500 uppercase">Type</label>
+                          <select name="type" defaultValue={goal.type} className="mt-1 w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            {goalTypes.map(gt => <option key={gt.id} value={gt.name}>{gt.name}</option>)}
+                          </select>
+                        </div>
+                        <div className="flex-1">
+                          <label className="text-xs font-semibold text-gray-500 uppercase">Status</label>
+                          <select name="status" defaultValue={goal.status} className="mt-1 w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Active</option>
+                            <option>On Track</option>
+                            <option>At Risk</option>
+                            <option>Paused</option>
+                            <option>Completed</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex justify-end gap-2 pt-2">
+                        <Link href="/planning" className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200 transition">Cancel</Link>
+                        <button type="submit" className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition">Save Changes</button>
+                      </div>
+                    </form>
+                  </div>
+                ) : (
                 <summary className="list-none cursor-pointer p-6 hover:bg-gray-50 transition-colors relative">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-start gap-4 flex-1">
@@ -94,19 +132,23 @@ export default async function PlanningHubPage() {
                     </div>
                     
                     <div className="flex flex-col items-end gap-2 w-32 shrink-0">
-                      <form action={deleteAction}>
-                        <button type="submit" className="text-gray-400 hover:text-red-600 p-1"><Trash2 className="h-4 w-4" /></button>
-                      </form>
+                      <div className="flex gap-1">
+                        <Link href={`/planning?edit=${goal.id}`} className="text-gray-400 hover:text-blue-600 p-1"><Pencil className="h-4 w-4" /></Link>
+                        <form action={deleteAction}>
+                          <button type="submit" className="text-gray-400 hover:text-red-600 p-1"><Trash2 className="h-4 w-4" /></button>
+                        </form>
+                      </div>
                       <div className="w-full mt-2">
-                        <div className="flex justify-between text-xs mb-1">
-                          <span className="font-medium text-gray-500">Progress</span>
-                          <span className="font-bold text-blue-600">{progress}%</span>
+                        <div className="flex justify-between text-xs text-gray-500 mb-1">
+                          <span>Progress</span>
+                          <span>{progress}%</span>
                         </div>
                         <div className="h-1.5 w-full rounded-full bg-gray-100"><div className="h-1.5 rounded-full bg-blue-600 transition-all" style={{ width: `${progress}%` }} /></div>
                       </div>
                     </div>
                   </div>
                 </summary>
+                )}
 
                 <div className="border-t border-gray-100 bg-gray-50 p-6">
                   <div className="ml-12 space-y-6">
