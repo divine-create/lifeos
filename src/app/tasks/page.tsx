@@ -21,24 +21,34 @@ export default async function TasksPage() {
 
       {/* Quick Add */}
       <div className="mb-6 px-2">
-        <form action={createTask} className="relative flex items-center bg-white rounded-lg border border-gray-200 shadow-sm focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 overflow-hidden">
-          <div className="pl-3 pr-2 text-gray-400">
-            <Plus className="h-5 w-5" />
+        <form action={createTask} className="relative flex flex-col sm:flex-row items-center bg-white rounded-lg border border-gray-200 shadow-sm focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden">
+          <div className="flex-1 flex items-center w-full">
+            <div className="pl-3 pr-2 text-gray-400">
+              <Plus className="h-5 w-5" />
+            </div>
+            <input
+              name="title"
+              required
+              type="text"
+              placeholder="Add a new task..."
+              className="flex-1 py-3 pr-3 text-[15px] focus:outline-none placeholder:text-gray-400 text-gray-900 bg-transparent"
+            />
           </div>
-          <input
-            name="title"
-            required
-            type="text"
-            placeholder="Add a task to 'Tasks', press Enter to save"
-            className="flex-1 py-3 text-[15px] focus:outline-none placeholder:text-gray-400 text-gray-800"
-          />
-          <div className="pr-3 flex items-center gap-2 text-gray-400">
-            <button type="button" className="p-1 hover:text-gray-600"><CalendarIcon className="h-4 w-4" /></button>
-            <button type="button" className="p-1 hover:text-gray-600"><Tag className="h-4 w-4" /></button>
+          <div className="flex items-center w-full sm:w-auto border-t sm:border-t-0 sm:border-l border-gray-100 bg-gray-50/50">
+            <input
+              name="deadline"
+              type="date"
+              className="py-3 px-3 text-sm text-gray-500 focus:outline-none bg-transparent cursor-pointer"
+              title="Set Deadline"
+            />
+            <input type="hidden" name="priority" value="Medium" />
+            <button 
+              type="submit" 
+              className="px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-colors h-full border-l border-gray-100"
+            >
+              Add
+            </button>
           </div>
-          <input type="hidden" name="priority" value="Medium" />
-          {/* Hide actual submit button, allow Enter key */}
-          <button type="submit" className="hidden">Add</button>
         </form>
       </div>
 
@@ -67,8 +77,13 @@ export default async function TasksPage() {
                         </button>
                       </form>
 
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 flex flex-col justify-center">
                         <p className="text-[15px] text-gray-800 truncate leading-snug">{task.title}</p>
+                        {task.deadline && (
+                          <span className="text-[12px] text-blue-600 font-medium">
+                            {new Date(task.deadline).toLocaleDateString()}
+                          </span>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -103,8 +118,13 @@ export default async function TasksPage() {
                           </button>
                         </form>
 
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 flex flex-col justify-center">
                           <p className="text-[14px] text-gray-500 line-through truncate leading-snug">{task.title}</p>
+                          {task.deadline && (
+                            <span className="text-[11px] text-gray-400">
+                              {new Date(task.deadline).toLocaleDateString()}
+                            </span>
+                          )}
                         </div>
 
                         <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">

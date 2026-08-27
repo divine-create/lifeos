@@ -79,12 +79,16 @@ export async function createTask(formData: FormData) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
 
+  const deadlineStr = formData.get("deadline") as string;
+  const deadline = deadlineStr ? new Date(deadlineStr) : null;
+
   await prisma.task.create({
     data: {
       userId,
       title: formData.get("title") as string,
       priority: (formData.get("priority") as string) || "Medium",
       status: "Todo",
+      deadline,
       estimatedTime: formData.get("estimatedTime")
         ? parseInt(formData.get("estimatedTime") as string)
         : null,
