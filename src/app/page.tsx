@@ -416,7 +416,7 @@ export default async function DashboardPage() {
                     name="title"
                     required
                     placeholder="New habit or rule..."
-                    className="flex-1 rounded-lg border border-gray-300 px-3 py-1.5 text-xs focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
                   />
                   <input type="hidden" name="type" value="Positive Habit" />
                   <input type="hidden" name="frequency" value="Daily" />

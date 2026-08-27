@@ -34,7 +34,7 @@ export default async function ExecutionHubPage() {
               required
               type="text"
               placeholder="Add a new task..."
-              className="flex-1 py-2 px-3 text-sm focus:outline-none bg-transparent"
+              className="flex-1 py-2 px-3 text-sm focus:outline-none bg-transparent text-gray-900 placeholder:text-gray-400"
             />
             <input type="hidden" name="priority" value="Medium" />
             <button type="submit" className="hidden">Add</button>
@@ -149,9 +149,9 @@ export default async function ExecutionHubPage() {
 
         <div className="p-4 border-b border-gray-100 bg-white">
           <form action={createScheduleSlot} className="flex gap-2">
-            <input name="title" required type="text" placeholder="Block title..." className="flex-1 rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-blue-600" />
-            <input name="startTime" required type="time" className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none" />
-            <input name="endTime" required type="time" className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm focus:outline-none" />
+            <input name="title" required type="text" placeholder="Block title..." className="flex-1 rounded-md border border-gray-300 px-2 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 bg-white focus:outline-none focus:ring-1 focus:ring-blue-600" />
+            <input name="startTime" required type="time" className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm text-gray-900 bg-white focus:outline-none" />
+            <input name="endTime" required type="time" className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm text-gray-900 bg-white focus:outline-none" />
             <button type="submit" className="bg-blue-600 text-white p-1.5 rounded-md hover:bg-blue-700 transition"><Plus className="h-4 w-4" /></button>
           </form>
         </div>
