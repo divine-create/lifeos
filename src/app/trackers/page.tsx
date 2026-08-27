@@ -1,4 +1,4 @@
-﻿import { getTrackers } from "@/app/actions";
+import { getTrackers } from "@/app/actions";
 import { Flame, CheckSquare, Activity, Plus, Target, CheckCircle2 } from "lucide-react";
 import { TrackerWidget } from "@/components/TrackerWidget";
 
@@ -8,7 +8,7 @@ export default async function TrackersPage() {
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-12">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Habits & Trackers</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Habit Tracker</h1>
         <p className="mt-2 text-gray-500">Manage your daily habits, abstinence rules, and quantifiable goals.</p>
       </div>
 

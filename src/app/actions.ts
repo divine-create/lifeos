@@ -266,7 +266,7 @@ export async function getTrackers() {
     include: {
       logs: {
         orderBy: { date: "desc" },
-        take: 7,
+        take: 31,
       },
     },
     orderBy: { createdAt: "desc" },

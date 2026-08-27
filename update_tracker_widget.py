@@ -1,8 +1,10 @@
+﻿import re
 
+content = """
 "use client";
 
 import { useState } from "react";
-import { Plus, Flame, Check, X as XIcon, Trash2 } from "lucide-react";
+import { Plus, Flame, Check, X as XIcon, Trash2, Edit2 } from "lucide-react";
 import { createTracker, logTrackerEntry, deleteTracker } from "@/app/actions";
 import toast from "react-hot-toast";
 
@@ -36,7 +38,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                 {last7Days.map((d, i) => (
                   <div key={i} className="w-10 text-center">
                     <div className="text-[10px] text-gray-400 font-medium uppercase">{d.toLocaleDateString('en-US', { weekday: 'short' })}</div>
-                    <div className={\	ext-xs font-bold \}>{d.getDate()}</div>
+                    <div className={\	ext-xs font-bold \\}>{d.getDate()}</div>
                   </div>
                 ))}
               </div>
@@ -52,7 +54,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                     <div className="w-1/3 min-w-[200px] pr-4">
                       <p className="text-sm font-semibold text-gray-900 truncate">{tracker.title}</p>
                       <p className="text-[10px] text-gray-500 uppercase tracking-wider truncate">
-                        {tracker.type} {tracker.targetValue ? \• \ \ : ''}
+                        {tracker.type} {tracker.targetValue ? \• \ \\ : ''}
                       </p>
                     </div>
                     
@@ -78,7 +80,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                               {!isBool && <input type="hidden" name="status" value="Failed" />}
                               {isActive && <input type="hidden" name="toggleOff" value="true" />}
                               
-                              <button type="submit" className={\lex h-8 w-8 items-center justify-center rounded-md border transition-all \}>
+                              <button type="submit" className={\lex h-8 w-8 items-center justify-center rounded-md border transition-all \\}>
                                 {isBool ? <Check className="h-4 w-4" /> : <XIcon className="h-4 w-4" />}
                               </button>
                             </form>
@@ -118,8 +120,8 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                         } else {
                           // Past days for quantitative trackers: show a small static block
                           return (
-                            <div key={i} title={log ? \ \ : "No data"} className="w-10 flex justify-center items-center">
-                              <div className={\lex h-8 w-8 items-center justify-center rounded-md border \}>
+                            <div key={i} title={log ? \\ \\ : "No data"} className="w-10 flex justify-center items-center">
+                              <div className={\lex h-8 w-8 items-center justify-center rounded-md border \\}>
                                 <span className="text-[10px] font-bold">{log ? log.value : '-'}</span>
                               </div>
                             </div>
@@ -205,3 +207,9 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
     </div>
   );
 }
+"""
+
+with open("src/components/TrackerWidget.tsx", "w", encoding="utf-8") as f:
+    f.write(content)
+
+print("Updated TrackerWidget.tsx to a full Habit Tracker Sheet!")

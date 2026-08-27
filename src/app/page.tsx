@@ -26,7 +26,7 @@ import {
   
 } from "lucide-react";
 import { LandingPage } from "@/components/LandingPage";
-import { DashboardWidgets } from "@/components/DashboardWidgets";import { TrackerWidget } from "@/components/TrackerWidget";
+import { DashboardWidgets } from "@/components/DashboardWidgets";import { TrackerStatsWidget } from "@/components/TrackerStatsWidget";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -345,7 +345,7 @@ export default async function DashboardPage() {
             </div>
             
             <div className="p-6 flex-1 flex flex-col justify-between">
-              <TrackerWidget trackers={trackers} />
+              <TrackerStatsWidget trackers={trackers} />
             </div>
           </div>
         </div>

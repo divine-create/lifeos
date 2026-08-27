@@ -52,7 +52,7 @@ export function Sidebar() {
       title: "EXECUTION",
       items: [
         { name: "Today & Focus", href: "/execution", icon: CheckSquare, color: "text-emerald-500" },
-        { name: "Habits & Trackers", href: "/trackers", icon: Flame, color: "text-orange-500" },
+        { name: "Habit Tracker", href: "/trackers", icon: Flame, color: "text-orange-500" },
       ]
     },
     {
