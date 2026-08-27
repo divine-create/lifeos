@@ -28,7 +28,7 @@ export function Sidebar() {
       ]
     },
     {
-      title: "PLANNING (THE WHY & HOW)",
+      title: "PLANNING",
       items: [
         { name: "Goals", href: "/goals", icon: Target, color: "text-red-500" },
         { name: "Milestones", href: "/milestones", icon: Flag, color: "text-orange-500" },
@@ -36,7 +36,7 @@ export function Sidebar() {
       ]
     },
     {
-      title: "EXECUTION (THE WHAT)",
+      title: "EXECUTION",
       items: [
         { name: "Schedule", href: "/schedule", icon: Calendar, color: "text-blue-500" },
         { name: "Tasks", href: "/tasks", icon: CheckSquare, color: "text-emerald-500" },
@@ -44,7 +44,7 @@ export function Sidebar() {
       ]
     },
     {
-      title: "REVIEW (RECORD REALITY)",
+      title: "REVIEW",
       items: [
         { name: "Activities", href: "/activities", icon: Activity, color: "text-purple-500" },
         { name: "Learning", href: "/learning", icon: BookOpen, color: "text-yellow-600" },
