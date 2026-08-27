@@ -23,7 +23,7 @@ export default async function MilestonesPage() {
               required
               type="text"
               placeholder="e.g. Complete MVP Phase 1"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="space-y-1 md:col-span-1">
@@ -32,7 +32,7 @@ export default async function MilestonesPage() {
               name="goalId"
               required
               defaultValue={goals[0]?.id || ""}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {goals.length === 0 ? (
                 <option value="" disabled>
@@ -57,7 +57,7 @@ export default async function MilestonesPage() {
             <input
               name="deadline"
               type="date"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="md:col-span-1">

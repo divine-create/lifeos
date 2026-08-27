@@ -20,7 +20,7 @@ export default async function ProjectsPage() {
               required
               type="text"
               placeholder="e.g. LifeOS Redesign"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="space-y-1 md:col-span-1">
@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
               name="description"
               type="text"
               placeholder="Brief description"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="space-y-1 md:col-span-1">
@@ -37,7 +37,7 @@ export default async function ProjectsPage() {
             <select
               name="goalId"
               defaultValue=""
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               <option value="">No linked goal</option>
               {goals.map((goal) => (

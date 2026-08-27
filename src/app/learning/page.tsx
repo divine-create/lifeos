@@ -125,7 +125,7 @@ export default async function LearningPage() {
               required
               type="text"
               placeholder="e.g. Master Distributed Systems"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="flex-1 w-full space-y-1">
@@ -137,7 +137,7 @@ export default async function LearningPage() {
               name="description"
               type="text"
               placeholder="e.g. Coursera / Stanford Online"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <button
