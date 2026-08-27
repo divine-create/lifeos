@@ -26,9 +26,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Providers>
           {session && session.user ? (
-            <div className="flex h-screen overflow-hidden bg-gray-50">
+            <div className="flex h-screen overflow-hidden bg-white selection:bg-blue-100 selection:text-blue-900">
               <Sidebar />
-              <main className="flex-1 overflow-y-auto">
+              <main className="flex-1 overflow-y-auto bg-white">
                 <div className="mx-auto max-w-7xl px-8 py-8">
                   {children}
                 </div>

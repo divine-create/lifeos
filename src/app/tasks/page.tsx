@@ -1,4 +1,4 @@
-import { Circle, CheckCircle2, Plus, Trash2, Clock } from "lucide-react";
+import { Circle, CheckCircle2, Plus, Trash2, Clock, Calendar as CalendarIcon, Tag, MoreHorizontal } from "lucide-react";
 import { getTasks, createTask, toggleTaskStatus, deleteTask } from "@/app/actions";
 
 export default async function TasksPage() {
@@ -8,204 +8,122 @@ export default async function TasksPage() {
   const completedTasks = tasks.filter((task) => task.status === "Done");
 
   return (
-    <div className="space-y-8">
-      {/* Title */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Tasks</h1>
+    <div className="max-w-4xl mx-auto h-full flex flex-col pt-4">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6 px-2">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Tasks</h1>
+        <div className="flex gap-2">
+          <button className="text-gray-400 hover:text-gray-600 p-1.5 rounded-md hover:bg-gray-100">
+            <MoreHorizontal className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
-      {/* Create Task Form */}
-      <div className="rounded-xl border bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Add Task</h2>
-        <form action={createTask} className="flex flex-col sm:flex-row gap-4 items-end">
-          <div className="flex-1 w-full space-y-1">
-            <label htmlFor="task-title" className="text-sm font-medium text-gray-700">
-              Task Title
-            </label>
-            <input
-              id="task-title"
-              name="title"
-              required
-              type="text"
-              placeholder="What needs to be done?"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
-            />
+      {/* Quick Add */}
+      <div className="mb-6 px-2">
+        <form action={createTask} className="relative flex items-center bg-white rounded-lg border border-gray-200 shadow-sm focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 overflow-hidden">
+          <div className="pl-3 pr-2 text-gray-400">
+            <Plus className="h-5 w-5" />
           </div>
-          <div className="w-full sm:w-36 space-y-1">
-            <label htmlFor="task-priority" className="text-sm font-medium text-gray-700">
-              Priority
-            </label>
-            <select
-              id="task-priority"
-              name="priority"
-              defaultValue="Medium"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
-            >
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-            </select>
+          <input
+            name="title"
+            required
+            type="text"
+            placeholder="Add a task to 'Tasks', press Enter to save"
+            className="flex-1 py-3 text-[15px] focus:outline-none placeholder:text-gray-400 text-gray-800"
+          />
+          <div className="pr-3 flex items-center gap-2 text-gray-400">
+            <button type="button" className="p-1 hover:text-gray-600"><CalendarIcon className="h-4 w-4" /></button>
+            <button type="button" className="p-1 hover:text-gray-600"><Tag className="h-4 w-4" /></button>
           </div>
-          <button
-            type="submit"
-            className="flex items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px] w-full sm:w-auto"
-          >
-            <Plus className="h-4 w-4" />
-            Add Task
-          </button>
+          <input type="hidden" name="priority" value="Medium" />
+          {/* Hide actual submit button, allow Enter key */}
+          <button type="submit" className="hidden">Add</button>
         </form>
       </div>
 
-      {/* Task List or Empty State */}
-      {tasks.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-gray-300 bg-white p-12 text-center shadow-sm">
-          <p className="text-gray-500 font-medium">No tasks yet. Add your first task above!</p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {/* Active Tasks Section */}
-          <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
-            <div className="border-b bg-gray-50/50 px-6 py-3 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-gray-700">
-                ACTIVE TASKS ({activeTasks.length})
-              </h2>
-            </div>
-            {activeTasks.length === 0 ? (
-              <div className="px-6 py-8 text-center text-sm text-gray-500">
-                No active tasks. Great job!
-              </div>
-            ) : (
-              <ul className="divide-y divide-gray-100">
+      {/* Lists */}
+      <div className="flex-1 overflow-y-auto px-2 pb-20">
+        {tasks.length === 0 ? (
+          <div className="flex flex-col items-center justify-center pt-20 text-gray-400">
+            <CheckCircle2 className="h-16 w-16 mb-4 opacity-20" />
+            <p className="text-[15px]">No tasks here.</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            
+            {/* Active */}
+            <div>
+              <ul className="space-y-0.5">
                 {activeTasks.map((task) => {
                   const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
                   const deleteAction = deleteTask.bind(null, task.id);
 
                   return (
-                    <li
-                      key={task.id}
-                      className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition"
-                    >
-                      <form action={toggleAction}>
-                        <button
-                          type="submit"
-                          className="flex items-center justify-center text-gray-400 hover:text-black transition"
-                          title="Mark as done"
-                        >
+                    <li key={task.id} className="group flex items-center gap-3 py-2.5 px-2 rounded-lg hover:bg-[#f7f7f7] transition-colors border-b border-gray-100 last:border-0">
+                      <form action={toggleAction} className="flex-shrink-0">
+                        <button type="submit" className="flex items-center justify-center text-gray-300 hover:text-blue-500 transition-colors">
                           <Circle className="h-5 w-5" />
                         </button>
                       </form>
 
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {task.title}
-                        </p>
+                        <p className="text-[15px] text-gray-800 truncate leading-snug">{task.title}</p>
                       </div>
 
-                      {task.estimatedTime && (
-                        <div className="flex items-center gap-1 text-xs text-gray-500">
-                          <Clock className="h-3.5 w-3.5" />
-                          <span>{task.estimatedTime}m</span>
-                        </div>
-                      )}
-
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                          task.priority === "High"
-                            ? "bg-red-50 text-red-700 ring-red-600/20"
-                            : task.priority === "Low"
-                            ? "bg-blue-50 text-blue-700 ring-blue-700/10"
-                            : "bg-yellow-50 text-yellow-800 ring-yellow-600/20"
-                        }`}
-                      >
-                        {task.priority}
-                      </span>
-
-                      <form action={deleteAction}>
-                        <button
-                          type="submit"
-                          className="flex items-center justify-center text-gray-400 hover:text-red-600 transition p-1"
-                          title="Delete task"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </form>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-
-          {/* Completed Tasks Section */}
-          {completedTasks.length > 0 && (
-            <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
-              <div className="border-b bg-gray-50/50 px-6 py-3 flex items-center justify-between">
-                <h2 className="text-sm font-semibold text-gray-500">
-                  COMPLETED TASKS ({completedTasks.length})
-                </h2>
-              </div>
-              <ul className="divide-y divide-gray-100">
-                {completedTasks.map((task) => {
-                  const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
-                  const deleteAction = deleteTask.bind(null, task.id);
-
-                  return (
-                    <li
-                      key={task.id}
-                      className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition opacity-75"
-                    >
-                      <form action={toggleAction}>
-                        <button
-                          type="submit"
-                          className="flex items-center justify-center text-green-500 hover:text-green-600 transition"
-                          title="Mark as active"
-                        >
-                          <CheckCircle2 className="h-5 w-5" />
-                        </button>
-                      </form>
-
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-400 line-through truncate">
-                          {task.title}
-                        </p>
+                      <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <form action={deleteAction}>
+                          <button type="submit" className="text-gray-400 hover:text-red-500 p-1 rounded hover:bg-white border border-transparent hover:border-gray-200">
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </form>
                       </div>
-
-                      {task.estimatedTime && (
-                        <div className="flex items-center gap-1 text-xs text-gray-400">
-                          <Clock className="h-3.5 w-3.5" />
-                          <span>{task.estimatedTime}m</span>
-                        </div>
-                      )}
-
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                          task.priority === "High"
-                            ? "bg-red-50/50 text-red-600 ring-red-600/10"
-                            : task.priority === "Low"
-                            ? "bg-blue-50/50 text-blue-600 ring-blue-700/10"
-                            : "bg-yellow-50/50 text-yellow-700 ring-yellow-600/10"
-                        }`}
-                      >
-                        {task.priority}
-                      </span>
-
-                      <form action={deleteAction}>
-                        <button
-                          type="submit"
-                          className="flex items-center justify-center text-gray-400 hover:text-red-600 transition p-1"
-                          title="Delete task"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </form>
                     </li>
                   );
                 })}
               </ul>
             </div>
-          )}
-        </div>
-      )}
+
+            {/* Completed */}
+            {completedTasks.length > 0 && (
+              <div>
+                <button className="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-2 px-2 hover:text-gray-700 uppercase tracking-wider">
+                  Completed
+                </button>
+                <ul className="space-y-0.5 opacity-60">
+                  {completedTasks.map((task) => {
+                    const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
+                    const deleteAction = deleteTask.bind(null, task.id);
+
+                    return (
+                      <li key={task.id} className="group flex items-center gap-3 py-2 px-2 rounded-lg hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
+                        <form action={toggleAction} className="flex-shrink-0">
+                          <button type="submit" className="flex items-center justify-center text-blue-500">
+                            <CheckCircle2 className="h-5 w-5" />
+                          </button>
+                        </form>
+
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] text-gray-500 line-through truncate leading-snug">{task.title}</p>
+                        </div>
+
+                        <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <form action={deleteAction}>
+                            <button type="submit" className="text-gray-400 hover:text-red-500 p-1 rounded hover:bg-white">
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </form>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+            
+          </div>
+        )}
+      </div>
     </div>
   );
 }
