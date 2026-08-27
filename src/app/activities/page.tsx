@@ -101,7 +101,7 @@ export default async function ActivitiesPage() {
                 type="text"
                 placeholder="e.g. Study, Coding, Exercise"
                 list="activity-suggestions"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
               <datalist id="activity-suggestions">
                 <option value="Study" />
@@ -124,7 +124,7 @@ export default async function ActivitiesPage() {
                 min="0"
                 step="1"
                 placeholder="e.g. 60"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -139,7 +139,7 @@ export default async function ActivitiesPage() {
                 min="0"
                 step="1"
                 placeholder="e.g. 45"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -152,7 +152,7 @@ export default async function ActivitiesPage() {
                 name="startTime"
                 required
                 type="datetime-local"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
@@ -164,7 +164,7 @@ export default async function ActivitiesPage() {
                 id="qualityRating"
                 name="qualityRating"
                 defaultValue="4"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               >
                 <option value="5">5 - Excellent</option>
                 <option value="4">4 - Good</option>
@@ -183,7 +183,7 @@ export default async function ActivitiesPage() {
                 name="notes"
                 rows={1}
                 placeholder="Notes or reflections..."
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
               />
             </div>
           </div>
@@ -191,7 +191,7 @@ export default async function ActivitiesPage() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="flex items-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
+              className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition"
             >
               <Plus className="h-4 w-4" />
               Log Activity

@@ -78,7 +78,7 @@ export default async function DashboardPage() {
           </Link>
           <Link
             href="/goals"
-            className="inline-flex items-center gap-2 rounded-lg bg-black px-3.5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-gray-800"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
           >
             <Target className="h-4 w-4" />
             Goals
@@ -181,7 +181,7 @@ export default async function DashboardPage() {
               </div>
               <Link
                 href="/tasks"
-                className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-black transition"
+                className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-blue-600 transition"
               >
                 View all tasks
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
                   </p>
                   <Link
                     href="/tasks"
-                    className="inline-flex items-center gap-1.5 mt-4 rounded-md bg-black px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-800 transition"
+                    className="inline-flex items-center gap-1.5 mt-4 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     Create Task
@@ -271,7 +271,7 @@ export default async function DashboardPage() {
               </div>
               <Link
                 href="/goals"
-                className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-black transition"
+                className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-blue-600 transition"
               >
                 View all goals
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -300,7 +300,7 @@ export default async function DashboardPage() {
                         </div>
                         <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
                           <div
-                            className="h-full rounded-full bg-black transition-all duration-300"
+                            className="h-full rounded-full bg-blue-600 transition-all duration-300"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
@@ -319,7 +319,7 @@ export default async function DashboardPage() {
                   </p>
                   <Link
                     href="/goals"
-                    className="inline-flex items-center gap-1.5 mt-4 rounded-md bg-black px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-800 transition"
+                    className="inline-flex items-center gap-1.5 mt-4 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     Create Goal
@@ -383,7 +383,7 @@ export default async function DashboardPage() {
                             className={`flex h-8 w-8 items-center justify-center rounded-lg border transition ${
                               isCompletedToday
                                 ? "border-green-600 bg-green-600 text-white cursor-default"
-                                : "border-gray-300 bg-white text-gray-400 hover:border-gray-400 hover:text-black cursor-pointer shadow-sm"
+                                : "border-gray-300 bg-white text-gray-400 hover:border-gray-400 hover:text-blue-600 cursor-pointer shadow-sm"
                             }`}
                           >
                             <Check className="h-4 w-4" />
@@ -413,13 +413,13 @@ export default async function DashboardPage() {
                     name="title"
                     required
                     placeholder="New habit or rule..."
-                    className="flex-1 rounded-lg border border-gray-300 px-3 py-1.5 text-xs focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                    className="flex-1 rounded-lg border border-gray-300 px-3 py-1.5 text-xs focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
                   />
                   <input type="hidden" name="type" value="Positive Habit" />
                   <input type="hidden" name="frequency" value="Daily" />
                   <button
                     type="submit"
-                    className="flex items-center gap-1 rounded-lg bg-black px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-800 transition shadow-sm"
+                    className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition shadow-sm"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     Add

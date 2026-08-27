@@ -51,7 +51,7 @@ export default function FocusPage() {
       <div className="flex items-center gap-6">
         <button
           onClick={toggle}
-          className="flex items-center justify-center h-16 w-16 rounded-full bg-black text-white hover:bg-gray-800 transition"
+          className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
         >
           {isActive ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8 ml-1" />}
         </button>

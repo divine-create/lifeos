@@ -20,7 +20,7 @@ export default async function ProjectsPage() {
               required
               type="text"
               placeholder="e.g. LifeOS Redesign"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="space-y-1 md:col-span-1">
@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
               name="description"
               type="text"
               placeholder="Brief description"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="space-y-1 md:col-span-1">
@@ -37,7 +37,7 @@ export default async function ProjectsPage() {
             <select
               name="goalId"
               defaultValue=""
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               <option value="">No linked goal</option>
               {goals.map((goal) => (
@@ -50,7 +50,7 @@ export default async function ProjectsPage() {
           <div className="md:col-span-1">
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px]"
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition h-[38px]"
             >
               <Plus className="h-4 w-4" />
               Add Project
@@ -137,7 +137,7 @@ export default async function ProjectsPage() {
                   </div>
                   <div className="h-2 w-full rounded-full bg-gray-100">
                     <div
-                      className="h-2 rounded-full bg-black transition-all"
+                      className="h-2 rounded-full bg-blue-600 transition-all"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

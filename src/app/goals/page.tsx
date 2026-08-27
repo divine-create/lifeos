@@ -53,7 +53,7 @@ export default async function GoalsPage() {
               required
               type="text"
               placeholder="e.g. Master Machine Learning"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="w-full sm:w-48 space-y-1">
@@ -63,7 +63,7 @@ export default async function GoalsPage() {
             <select
               id="type"
               name="type"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               defaultValue="Achievement"
             >
               <option value="Achievement">Achievement</option>
@@ -73,7 +73,7 @@ export default async function GoalsPage() {
           </div>
           <button
             type="submit"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px]"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition h-[38px]"
           >
             <Plus className="h-4 w-4" />
             Add Goal
@@ -155,7 +155,7 @@ export default async function GoalsPage() {
                   </div>
                   <div className="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
                     <div
-                      className="h-2 rounded-full bg-black transition-all duration-300"
+                      className="h-2 rounded-full bg-blue-600 transition-all duration-300"
                       style={{ width: `${progress}%` }}
                     />
                   </div>

@@ -125,7 +125,7 @@ export default async function LearningPage() {
               required
               type="text"
               placeholder="e.g. Master Distributed Systems"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="flex-1 w-full space-y-1">
@@ -137,12 +137,12 @@ export default async function LearningPage() {
               name="description"
               type="text"
               placeholder="e.g. Coursera / Stanford Online"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <button
             type="submit"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px] whitespace-nowrap"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition h-[38px] whitespace-nowrap"
           >
             <Plus className="h-4 w-4" />
             Add Goal
@@ -168,7 +168,7 @@ export default async function LearningPage() {
             <div className="mt-4">
               <Link
                 href="/goals"
-                className="inline-flex items-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
+                className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition"
               >
                 Go to Goals
               </Link>

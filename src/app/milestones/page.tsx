@@ -23,7 +23,7 @@ export default async function MilestonesPage() {
               required
               type="text"
               placeholder="e.g. Complete MVP Phase 1"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="space-y-1 md:col-span-1">
@@ -32,7 +32,7 @@ export default async function MilestonesPage() {
               name="goalId"
               required
               defaultValue={goals[0]?.id || ""}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {goals.length === 0 ? (
                 <option value="" disabled>
@@ -57,13 +57,13 @@ export default async function MilestonesPage() {
             <input
               name="deadline"
               type="date"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
           <div className="md:col-span-1">
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px]"
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition h-[38px]"
             >
               <Plus className="h-4 w-4" />
               Add Milestone
@@ -160,7 +160,7 @@ export default async function MilestonesPage() {
                     <div className="h-2 w-full rounded-full bg-gray-100">
                       <div
                         className={`h-2 rounded-full transition-all ${
-                          isCompleted ? "bg-green-500" : "bg-black"
+                          isCompleted ? "bg-green-500" : "bg-blue-600"
                         }`}
                         style={{ width: `${progress}%` }}
                       />

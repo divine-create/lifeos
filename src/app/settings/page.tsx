@@ -59,7 +59,7 @@ export default async function SettingsPage() {
             <p className="text-sm text-gray-600">Please sign in to view settings</p>
             <Link
               href="/api/auth/signin"
-              className="inline-flex items-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
+              className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition"
             >
               Sign In
             </Link>

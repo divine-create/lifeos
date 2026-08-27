@@ -48,7 +48,7 @@ export default function SchedulePage() {
                 
                 <div className="flex items-center gap-2">
                   {slot.status === 'active' && (
-                    <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md text-sm hover:bg-gray-800 transition">
+                    <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition">
                       <PlayCircle className="h-4 w-4" />
                       Start Focus
                     </button>

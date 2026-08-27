@@ -7,7 +7,7 @@ export function LandingPage() {
       {/* Navigation */}
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
             <Zap className="h-5 w-5 text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight text-gray-900">LifeOS</span>
@@ -18,7 +18,7 @@ export function LandingPage() {
           </Link>
           <Link
             href="/api/auth/signin"
-            className="rounded-full bg-black px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition"
+            className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition"
           >
             Get started
           </Link>
@@ -43,7 +43,7 @@ export function LandingPage() {
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Link
                   href="/api/auth/signin"
-                  className="rounded-full bg-black px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black transition flex items-center gap-2"
+                  className="rounded-full bg-blue-600 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition flex items-center gap-2"
                 >
                   Start your journey <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -70,7 +70,7 @@ export function LandingPage() {
               
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-black">
+                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
                     <Target className="h-6 w-6 text-white" />
                   </div>
                   Goal Tracking
@@ -82,7 +82,7 @@ export function LandingPage() {
 
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-black">
+                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
                     <CheckCircle2 className="h-6 w-6 text-white" />
                   </div>
                   Task Management
@@ -94,7 +94,7 @@ export function LandingPage() {
 
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-black">
+                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
                     <ShieldCheck className="h-6 w-6 text-white" />
                   </div>
                   Discipline & Habits
@@ -106,7 +106,7 @@ export function LandingPage() {
 
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-black">
+                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
                     <Activity className="h-6 w-6 text-white" />
                   </div>
                   Activity Logging
@@ -132,7 +132,7 @@ export function LandingPage() {
           <div className="mt-10 flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
             <Link
               href="/api/auth/signin"
-              className="rounded-full bg-black px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 transition"
+              className="rounded-full bg-blue-600 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition"
             >
               Sign up with Google
             </Link>
