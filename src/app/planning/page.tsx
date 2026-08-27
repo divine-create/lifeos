@@ -32,7 +32,7 @@ export default async function PlanningHubPage() {
 
       {/* Create Goal Form */}
       <div className="rounded-xl border bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Create New Goal</h2>
+        <h2 className="text-lg font-semibold mb-4 text-gray-900">Create New Goal</h2>
         <form action={createGoal} className="flex flex-col gap-4">
           <div className="flex flex-col md:flex-row gap-4 items-start">
             <div className="flex-1 w-full space-y-1">
