@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
-import { Plus, Flame, Check, X as XIcon, Settings2, Trash2 } from "lucide-react";
+import { Plus, Flame, Check, X as XIcon, Trash2 } from "lucide-react";
 import { createTracker, logTrackerEntry, deleteTracker } from "@/app/actions";
 
 export function TrackerWidget({ trackers }: { trackers: any[] }) {

@@ -6,9 +6,9 @@ import {
   getGoals,
   getTasks,
   getTrackers,
-  logTrackerEntry,
+  
   toggleTaskStatus,
-  createTracker,
+  
 } from "@/app/actions";
 import {
   Target,
@@ -17,13 +17,13 @@ import {
   
   Zap,
   CheckSquare,
-  ShieldCheck,
+  Shield
   Plus,
   ArrowRight,
   
   Clock,
-  Flame,
-  Check,
+  
+  
 } from "lucide-react";
 import { LandingPage } from "@/components/LandingPage";
 import { DashboardWidgets } from "@/components/DashboardWidgets";import { TrackerWidget } from "@/components/TrackerWidget";
