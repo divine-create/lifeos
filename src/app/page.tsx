@@ -17,7 +17,7 @@ import {
   
   Zap,
   CheckSquare,
-  Shield
+  ShieldCheck,
   Plus,
   ArrowRight,
   
