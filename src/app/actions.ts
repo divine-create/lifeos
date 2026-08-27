@@ -315,3 +315,51 @@ export async function getDashboardStats() {
     executionRate: totalPlanned > 0 ? Math.round((totalActual / totalPlanned) * 100) : 0,
   };
 }
+// ─── SCHEDULE SLOTS ─────────────────────────────────
+
+export async function getScheduleSlots() {
+  const userId = await getUserId();
+  if (!userId) return [];
+  return prisma.scheduleSlot.findMany({
+    where: { userId },
+    orderBy: { startTime: "asc" },
+  });
+}
+
+export async function createScheduleSlot(formData: FormData) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  await prisma.scheduleSlot.create({
+    data: {
+      userId,
+      title: formData.get("title") as string,
+      startTime: formData.get("startTime") as string,
+      endTime: formData.get("endTime") as string,
+      status: "pending",
+    },
+  });
+  revalidatePath("/schedule");
+}
+
+export async function updateScheduleSlotStatus(id: string, status: string) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  await prisma.scheduleSlot.update({
+    where: { id, userId },
+    data: { status },
+  });
+  revalidatePath("/schedule");
+}
+
+export async function deleteScheduleSlot(id: string) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  await prisma.scheduleSlot.delete({
+    where: { id, userId },
+  });
+  revalidatePath("/schedule");
+}
+
