@@ -22,22 +22,18 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 min-h-screen transition-colors duration-200`}>
         <Providers>
-          {session && session.user ? (
-            <div className="flex h-screen overflow-hidden bg-white selection:bg-blue-100 selection:text-blue-900">
+          {session ? (
+            <div className="flex h-screen overflow-hidden">
               <Sidebar />
-              <main className="flex-1 overflow-y-auto bg-white relative">
-                <div className="mx-auto max-w-7xl px-4 md:px-8 py-16 md:py-8">
-                  {children}
-                </div>
+              <main className="flex-1 overflow-y-auto pt-16 md:pt-8 p-4 md:p-8 bg-gray-50 dark:bg-zinc-950">
+                {children}
               </main>
             </div>
           ) : (
-            <main className="min-h-screen bg-white">
-              {children}
-            </main>
+            <main className="min-h-screen bg-gray-50 dark:bg-zinc-950">{children}</main>
           )}
         </Providers>
       </body>

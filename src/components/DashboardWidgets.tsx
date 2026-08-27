@@ -34,13 +34,13 @@ export async function DashboardWidgets() {
           Attention Required
         </h2>
         {overdueTasks.length === 0 ? (
-          <p className="text-sm text-gray-500">All clear! No overdue items.</p>
+          <p className="text-sm text-gray-500 dark:text-zinc-400">All clear! No overdue items.</p>
         ) : (
           <ul className="space-y-3">
             {overdueTasks.slice(0, 5).map(task => (
               <li key={task.id} className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">{task.title}</p>
+                  <p className="text-sm font-semibold text-gray-900 dark:text-zinc-100">{task.title}</p>
                   <p className="text-xs text-red-600 font-medium">Overdue: {task.deadline!.toLocaleDateString()}</p>
                 </div>
               </li>
@@ -50,7 +50,7 @@ export async function DashboardWidgets() {
       </div>
 
       {/* Consistency Heatmap */}
-      <div className="rounded-xl border bg-white p-6 shadow-sm">
+      <div className="rounded-xl border bg-white dark:bg-zinc-900 p-6 shadow-sm">
         <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-4">90-Day Focus Consistency</h2>
         <div className="flex flex-wrap gap-1">
           {days.map(dayStr => {
@@ -58,7 +58,7 @@ export async function DashboardWidgets() {
             let bgColor = "bg-gray-100";
             if (minutes > 0 && minutes <= 30) bgColor = "bg-green-200";
             else if (minutes > 30 && minutes <= 60) bgColor = "bg-green-300";
-            else if (minutes > 60 && minutes <= 120) bgColor = "bg-green-500";
+            else if (minutes > 60 && minutes <= 120) bgColor = "bg-green-50 dark:bg-green-900/200";
             else if (minutes > 120) bgColor = "bg-green-700";
 
             return (
@@ -70,13 +70,13 @@ export async function DashboardWidgets() {
             );
           })}
         </div>
-        <div className="flex justify-between items-center mt-4 text-xs text-gray-500">
+        <div className="flex justify-between items-center mt-4 text-xs text-gray-500 dark:text-zinc-400">
           <span>{days[0]}</span>
           <div className="flex items-center gap-1">
             <span>Less</span>
             <div className="h-2 w-2 rounded-sm bg-gray-100" />
             <div className="h-2 w-2 rounded-sm bg-green-200" />
-            <div className="h-2 w-2 rounded-sm bg-green-500" />
+            <div className="h-2 w-2 rounded-sm bg-green-50 dark:bg-green-900/200" />
             <div className="h-2 w-2 rounded-sm bg-green-700" />
             <span>More</span>
           </div>
