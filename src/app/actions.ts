@@ -363,3 +363,28 @@ export async function deleteScheduleSlot(id: string) {
   revalidatePath("/schedule");
 }
 
+// ─── FOCUS TIMER ───────────────────────────────────
+
+export async function logFocusActivity(title: string, durationMinutes: number) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  const endTime = new Date();
+  const startTime = new Date(endTime.getTime() - durationMinutes * 60000);
+
+  await prisma.activity.create({
+    data: {
+      userId,
+      type: "Focus Session",
+      plannedDuration: null,
+      actualDuration: durationMinutes,
+      startTime,
+      endTime,
+      qualityRating: null,
+      notes: title || "Unlabeled Focus Session",
+    },
+  });
+  revalidatePath("/activities");
+  revalidatePath("/");
+}
+
