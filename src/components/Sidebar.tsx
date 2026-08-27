@@ -6,22 +6,28 @@ import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard,
   Target, 
-  Flag, 
-  FolderKanban, 
-  Calendar,
+  
+  
+  
   CheckSquare, 
-  Timer,
+  
   Activity,
-  BookOpen,
+  
+  
   Settings,
-  Search,
-  Plus,
+  
+  
   Menu,
-  X
+  X,
+  
+  
+  Flame
 } from "lucide-react";
+
 
 export function Sidebar() {
   const pathname = usePathname();
+  
   const [isOpen, setIsOpen] = useState(false);
 
   // Close sidebar on route change on mobile
@@ -46,6 +52,7 @@ export function Sidebar() {
       title: "EXECUTION",
       items: [
         { name: "Today & Focus", href: "/execution", icon: CheckSquare, color: "text-emerald-500" },
+        { name: "Habits & Trackers", href: "/trackers", icon: Flame, color: "text-orange-500" },
       ]
     },
     {
