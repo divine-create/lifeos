@@ -11,23 +11,34 @@ export const metadata: Metadata = {
   description: "Your complete personal operating system",
 };
 
-export default function RootLayout({
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <div className="flex h-screen overflow-hidden bg-gray-50">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto">
-              <div className="mx-auto max-w-7xl px-8 py-8">
-                {children}
-              </div>
+          {session && session.user ? (
+            <div className="flex h-screen overflow-hidden bg-gray-50">
+              <Sidebar />
+              <main className="flex-1 overflow-y-auto">
+                <div className="mx-auto max-w-7xl px-8 py-8">
+                  {children}
+                </div>
+              </main>
+            </div>
+          ) : (
+            <main className="min-h-screen bg-white">
+              {children}
             </main>
-          </div>
+          )}
         </Providers>
       </body>
     </html>

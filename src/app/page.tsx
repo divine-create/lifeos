@@ -25,36 +25,14 @@ import {
   Flame,
   Check,
 } from "lucide-react";
+import { LandingPage } from "@/components/LandingPage";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
-  // If no session, show sign-in prompt
+  // If no session, show landing page
   if (!session || !session.user) {
-    return (
-      <div className="flex min-h-[70vh] flex-col items-center justify-center text-center">
-        <div className="mx-auto w-full max-w-md space-y-6 rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
-            <LogIn className="h-7 w-7 text-gray-700" />
-          </div>
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">
-              Welcome to LifeOS
-            </h1>
-            <p className="text-sm text-gray-500">
-              Sign in to access your personal dashboard, track goals, manage daily priorities, and monitor your habits.
-            </p>
-          </div>
-          <Link
-            href="/api/auth/signin"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white shadow transition hover:bg-gray-800"
-          >
-            <LogIn className="h-4 w-4" />
-            Sign In to LifeOS
-          </Link>
-        </div>
-      </div>
-    );
+    return <LandingPage />;
   }
 
   // Fetch real data from server actions
