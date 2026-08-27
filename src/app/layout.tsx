@@ -28,8 +28,8 @@ export default async function RootLayout({
           {session && session.user ? (
             <div className="flex h-screen overflow-hidden bg-white selection:bg-blue-100 selection:text-blue-900">
               <Sidebar />
-              <main className="flex-1 overflow-y-auto bg-white">
-                <div className="mx-auto max-w-7xl px-8 py-8">
+              <main className="flex-1 overflow-y-auto bg-white relative">
+                <div className="mx-auto max-w-7xl px-4 md:px-8 py-16 md:py-8">
                   {children}
                 </div>
               </main>

@@ -442,7 +442,7 @@ export async function getGoalTypes() {
   if (existingTypes.length === 0) {
     const defaults = ["Achievement", "Learning", "Habit", "Health", "Career", "Finance"];
     await prisma.goalType.createMany({
-      data: defaults.map(name => ({ userId, name })), skipDuplicates: true,
+      data: defaults.map(name => ({ userId, name })),
       skipDuplicates: true
     });
     return prisma.goalType.findMany({ where: { userId } });
