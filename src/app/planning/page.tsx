@@ -152,7 +152,7 @@ export default async function PlanningHubPage() {
                                         <input type="hidden" name="milestoneId" value={milestone.id} />
                                         <input type="hidden" name="goalId" value={goal.id} />
                                         <div className="absolute left-2 top-1.5 text-gray-400"><Plus className="h-3 w-3" /></div>
-                                        <input name="title" required type="text" placeholder="Add task to project..." className="w-full bg-white border border-gray-200 rounded py-1 pl-6 pr-2 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500" />
+                                        <input name="title" required type="text" placeholder="Add task to project..." className="w-full bg-white border border-gray-200 rounded py-1 pl-6 pr-12 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500" />                                          <button type="submit" className="absolute right-0.5 top-0.5 bottom-0.5 px-2 bg-gray-100 text-gray-600 font-medium text-[10px] rounded hover:bg-gray-200 transition">Add</button>
                                       </form>
                                     </div>
                                   ))}
@@ -174,20 +174,22 @@ export default async function PlanningHubPage() {
                                 </ul>
                               )}
 
-                              <div className="mt-4 flex gap-2">
+                              <div className="mt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 border-t border-gray-100 pt-3">
                                 {/* Add Task directly to Milestone */}
                                 <form action={createTask} className="relative flex-1">
                                   <input type="hidden" name="milestoneId" value={milestone.id} />
                                   <input type="hidden" name="goalId" value={goal.id} />
                                   <div className="absolute left-2 top-1.5 text-gray-400"><Plus className="h-3 w-3" /></div>
-                                  <input name="title" required type="text" placeholder="Add task to milestone..." className="w-full bg-gray-50 border border-gray-200 rounded py-1 pl-6 pr-2 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500" />
+                                  <input name="title" required type="text" placeholder="Add task to milestone..." className="w-full bg-gray-50 border border-gray-200 rounded py-1 pl-6 pr-12 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500" />
+                                  <button type="submit" className="absolute right-0.5 top-0.5 bottom-0.5 px-2 bg-gray-200 text-gray-600 font-medium text-[10px] rounded hover:bg-gray-300 transition">Add</button>
                                 </form>
                                 {/* Add Project to Milestone */}
                                 <form action={createProject} className="relative flex-1">
                                   <input type="hidden" name="milestoneId" value={milestone.id} />
                                   <input type="hidden" name="goalId" value={goal.id} />
                                   <div className="absolute left-2 top-1.5 text-gray-400"><FolderKanban className="h-3 w-3" /></div>
-                                  <input name="title" required type="text" placeholder="Add project..." className="w-full bg-gray-50 border border-gray-200 rounded py-1 pl-6 pr-2 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500" />
+                                  <input name="title" required type="text" placeholder="Add project..." className="w-full bg-gray-50 border border-gray-200 rounded py-1 pl-6 pr-12 text-xs text-gray-900 placeholder:text-gray-400 focus:ring-1 focus:ring-blue-500" />
+                                  <button type="submit" className="absolute right-0.5 top-0.5 bottom-0.5 px-2 bg-gray-200 text-gray-600 font-medium text-[10px] rounded hover:bg-gray-300 transition">Add</button>
                                 </form>
                               </div>
                             </div>
@@ -197,12 +199,13 @@ export default async function PlanningHubPage() {
                     })}
 
                     {/* Add Milestone to Goal */}
-                    <div className="relative pl-7">
+                    <div className="relative pl-6 mt-4">
                       <div className="absolute left-[3px] top-3 h-2 w-2 rounded-full border-2 border-gray-300" />
                       <form action={createMilestone} className="relative max-w-sm">
                         <input type="hidden" name="goalId" value={goal.id} />
                         <div className="absolute left-3 top-2.5 text-gray-400"><Flag className="h-4 w-4" /></div>
-                        <input name="title" required type="text" placeholder="Add new milestone..." className="w-full bg-white border border-gray-200 rounded-md py-2 pl-9 pr-3 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                        <input name="title" required type="text" placeholder="Add new milestone..." className="w-full bg-white border border-gray-200 rounded-md py-2 pl-9 pr-16 text-sm text-gray-900 placeholder:text-gray-400 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                        <button type="submit" className="absolute right-1 top-1 bottom-1 px-3 bg-blue-50 text-blue-600 font-medium text-xs rounded hover:bg-blue-100 transition">Save</button>
                       </form>
                     </div>
 
