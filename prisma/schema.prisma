@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// NextAuth Models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  
+  // LifeOS Entities
+  visions       Vision[]
+  goals         Goal[]
+  milestones    Milestone[]
+  projects      Project[]
+  tasks         Task[]
+  activities    Activity[]
+  trackers      Tracker[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// LifeOS Models
+
+model Vision {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goals       Goal[]
+}
+
+model Goal {
+  id               String   @id @default(cuid())
+  userId           String
+  visionId         String?
+  title            String
+  description      String?
+  type             String   // Achievement, Learning, Habit, Abstinence, Relationship, Maintenance
+  status           String   // Draft, Active, On Track, At Risk, Paused, Completed, Cancelled, Archived
+  startDate        DateTime?
+  targetDate       DateTime?
+  progress         Float    @default(0.0)
+  successCriteria  String?  @db.Text
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vision           Vision?     @relation(fields: [visionId], references: [id], onDelete: SetNull)
+  milestones       Milestone[]
+  projects         Project[]
+  tasks            Task[]
+}
+
+model Milestone {
+  id          String   @id @default(cuid())
+  userId      String
+  goalId      String
+  title       String
+  deadline    DateTime?
+  progress    Float    @default(0.0)
+  status      String   // Pending, Completed
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goal        Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  projects    Project[]
+  tasks       Task[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  goalId      String?
+  milestoneId String?
+  title       String
+  description String?
+  status      String   // Active, Completed, Paused
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goal        Goal?      @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  milestone   Milestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+  tasks       Task[]
+}
+
+model Task {
+  id              String   @id @default(cuid())
+  userId          String
+  goalId          String?
+  milestoneId     String?
+  projectId       String?
+  title           String
+  description     String?
+  priority        String   // Low, Medium, High
+  status          String   // Backlog, Todo, In Progress, Blocked, Done, Cancelled
+  deadline        DateTime?
+  estimatedTime   Int?     // in minutes
+  actualTime      Int?     // in minutes
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goal            Goal?      @relation(fields: [goalId], references: [id], onDelete: SetNull)
+  milestone       Milestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+  project         Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+}
+
+model Activity {
+  id               String   @id @default(cuid())
+  userId           String
+  goalId           String?
+  type             String   // Study, Coding, Exercise, etc.
+  plannedDuration  Int?     // in minutes
+  actualDuration   Int?     // in minutes
+  startTime        DateTime
+  endTime          DateTime?
+  qualityRating    Int?     // 1-5
+  notes            String?  @db.Text
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Tracker {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String   // e.g. "No Caffeine", "Exercise"
+  type        String   // Positive Habit, Abstinence Rule, Quantity, Duration, Rating, Counter
+  targetValue Float?
+  unit        String?
+  frequency   String   // Daily, Weekly
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logs        TrackerLog[]
+}
+
+model TrackerLog {
+  id          String   @id @default(cuid())
+  trackerId   String
+  date        DateTime @db.Date
+  value       Float
+  status      String   // Successful, Failed
+  notes       String?  @db.Text
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tracker     Tracker  @relation(fields: [trackerId], references: [id], onDelete: Cascade)
+}
