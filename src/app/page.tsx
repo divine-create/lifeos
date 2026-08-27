@@ -71,14 +71,14 @@ export default async function DashboardPage() {
         </div>
         <div className="flex items-center gap-3 mt-4 sm:mt-0">
           <Link
-            href="/tasks"
+            href="/execution"
             className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50"
           >
             <CheckSquare className="h-4 w-4" />
             Tasks
           </Link>
           <Link
-            href="/goals"
+            href="/planning"
             className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
           >
             <Target className="h-4 w-4" />
@@ -183,7 +183,7 @@ export default async function DashboardPage() {
                 <h2 className="font-semibold text-gray-900">Top Priorities</h2>
               </div>
               <Link
-                href="/tasks"
+                href="/execution"
                 className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-blue-600 transition"
               >
                 View all tasks
@@ -254,7 +254,7 @@ export default async function DashboardPage() {
                     Add new tasks to keep track of your daily priorities.
                   </p>
                   <Link
-                    href="/tasks"
+                    href="/execution"
                     className="inline-flex items-center gap-1.5 mt-4 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition"
                   >
                     <Plus className="h-3.5 w-3.5" />
@@ -273,7 +273,7 @@ export default async function DashboardPage() {
                 <h2 className="font-semibold text-gray-900">Goal Progress</h2>
               </div>
               <Link
-                href="/goals"
+                href="/planning"
                 className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-blue-600 transition"
               >
                 View all goals
@@ -321,7 +321,7 @@ export default async function DashboardPage() {
                     Set up your vision and break it down into actionable goals.
                   </p>
                   <Link
-                    href="/goals"
+                    href="/planning"
                     className="inline-flex items-center gap-1.5 mt-4 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition"
                   >
                     <Plus className="h-3.5 w-3.5" />
