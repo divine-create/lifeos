@@ -1,5 +1,5 @@
 import { FolderKanban, Plus, Trash2, CheckCircle2 } from "lucide-react";
-import { getProjects, createProject, getGoals, deleteProject } from "@/app/actions";
+import { getProjects, createProject, getGoals, deleteProject, createTask, toggleTaskStatus } from "@/app/actions";
 
 export default async function ProjectsPage() {
   const [projects, goals] = await Promise.all([getProjects(), getGoals()]);
@@ -126,20 +126,69 @@ export default async function ProjectsPage() {
                 </div>
 
                 <div className="space-y-3 pt-2">
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-sm mb-2">
                     <div className="flex items-center gap-2 text-gray-500">
                       <CheckCircle2 className="h-4 w-4 text-gray-400" />
                       <span>
-                        {doneTasks} / {project.tasks?.length || 0} tasks
+                        {doneTasks} / {totalTasks} tasks
                       </span>
                     </div>
                     <span className="font-medium">{progress}%</span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-gray-100">
+                  <div className="h-2 w-full rounded-full bg-gray-100 mb-4">
                     <div
                       className="h-2 rounded-full bg-blue-600 transition-all"
                       style={{ width: `${progress}%` }}
                     />
+                  </div>
+
+                  <div className="border-t border-gray-100 pt-4 mt-4">
+                    {project.tasks && project.tasks.length > 0 && (
+                      <ul className="space-y-2 mb-4">
+                        {project.tasks.map((task) => {
+                          const isTaskDone = task.status === "Done";
+                          const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
+                          return (
+                            <li key={task.id} className="group flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2 flex-1 min-w-0">
+                                <form action={toggleAction} className="flex-shrink-0">
+                                  <button type="submit" className="flex items-center justify-center hover:opacity-80 transition-opacity">
+                                    {isTaskDone ? (
+                                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                    ) : (
+                                      <div className="h-4 w-4 rounded-full border-2 border-gray-300 group-hover:border-blue-500 transition-colors" />
+                                    )}
+                                  </button>
+                                </form>
+                                <span
+                                  className={`text-sm truncate ${
+                                    isTaskDone ? "text-gray-400 line-through" : "text-gray-700"
+                                  }`}
+                                >
+                                  {task.title}
+                                </span>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+
+                    <form action={createTask} className="relative flex items-center mt-2">
+                      <input type="hidden" name="projectId" value={project.id} />
+                      <input type="hidden" name="goalId" value={project.goalId || ""} />
+                      <div className="absolute left-2 text-gray-400">
+                        <Plus className="h-4 w-4" />
+                      </div>
+                      <input
+                        name="title"
+                        required
+                        type="text"
+                        placeholder="Add task to project..."
+                        className="w-full bg-gray-50 border border-gray-200 rounded-md py-1.5 pl-8 pr-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white transition-colors"
+                      />
+                      <button type="submit" className="hidden">Add</button>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -82,6 +82,10 @@ export async function createTask(formData: FormData) {
   const deadlineStr = formData.get("deadline") as string;
   const deadline = deadlineStr ? new Date(deadlineStr) : null;
 
+  const goalId = formData.get("goalId") as string;
+  const milestoneId = formData.get("milestoneId") as string;
+  const projectId = formData.get("projectId") as string;
+
   await prisma.task.create({
     data: {
       userId,
@@ -89,12 +93,18 @@ export async function createTask(formData: FormData) {
       priority: (formData.get("priority") as string) || "Medium",
       status: "Todo",
       deadline,
+      goalId: goalId || null,
+      milestoneId: milestoneId || null,
+      projectId: projectId || null,
       estimatedTime: formData.get("estimatedTime")
         ? parseInt(formData.get("estimatedTime") as string)
         : null,
     },
   });
   revalidatePath("/tasks");
+  revalidatePath("/milestones");
+  revalidatePath("/projects");
+  revalidatePath("/goals");
   revalidatePath("/");
 }
 
@@ -106,6 +116,8 @@ export async function toggleTaskStatus(taskId: string, currentStatus: string) {
     data: { status: currentStatus === "Done" ? "Todo" : "Done" },
   });
   revalidatePath("/tasks");
+  revalidatePath("/milestones");
+  revalidatePath("/projects");
   revalidatePath("/");
 }
 

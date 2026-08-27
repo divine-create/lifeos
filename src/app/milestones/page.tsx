@@ -1,5 +1,5 @@
 import { Flag, Plus, Clock, CheckCircle2, Circle } from "lucide-react";
-import { getMilestones, createMilestone, getGoals } from "@/app/actions";
+import { getMilestones, createMilestone, getGoals, createTask, toggleTaskStatus } from "@/app/actions";
 
 export default async function MilestonesPage() {
   const [milestones, goals] = await Promise.all([
@@ -167,37 +167,61 @@ export default async function MilestonesPage() {
                     </div>
                   </div>
 
-                  <div className="border-t pt-4">
+                  <div className="border-t pt-4 mt-auto">
                     <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
                       Tasks
                     </h3>
                     {milestone.tasks && milestone.tasks.length > 0 ? (
-                      <ul className="space-y-2">
+                      <ul className="space-y-2 mb-4">
                         {milestone.tasks.map((task) => {
                           const isTaskDone = task.status === "Done";
+                          const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
                           return (
-                            <li key={task.id} className="flex items-center gap-2">
-                              {isTaskDone ? (
-                                <CheckCircle2 className="h-4 w-4 text-green-600 shrink-0" />
-                              ) : (
-                                <Circle className="h-4 w-4 text-gray-300 shrink-0" />
-                              )}
-                              <span
-                                className={`text-sm ${
-                                  isTaskDone
-                                    ? "text-gray-400 line-through"
-                                    : "text-gray-700"
-                                }`}
-                              >
-                                {task.title}
-                              </span>
+                            <li key={task.id} className="group flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2 flex-1 min-w-0">
+                                <form action={toggleAction} className="flex-shrink-0">
+                                  <button type="submit" className="flex items-center justify-center hover:opacity-80 transition-opacity">
+                                    {isTaskDone ? (
+                                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                    ) : (
+                                      <Circle className="h-4 w-4 text-gray-300 hover:text-blue-500" />
+                                    )}
+                                  </button>
+                                </form>
+                                <span
+                                  className={`text-sm truncate ${
+                                    isTaskDone
+                                      ? "text-gray-400 line-through"
+                                      : "text-gray-700"
+                                  }`}
+                                >
+                                  {task.title}
+                                </span>
+                              </div>
                             </li>
                           );
                         })}
                       </ul>
                     ) : (
-                      <p className="text-xs text-gray-400 italic">No tasks linked yet</p>
+                      <p className="text-xs text-gray-400 italic mb-4">No tasks linked yet</p>
                     )}
+
+                    {/* Quick Add Task to Milestone */}
+                    <form action={createTask} className="relative flex items-center mt-2">
+                      <input type="hidden" name="milestoneId" value={milestone.id} />
+                      <input type="hidden" name="goalId" value={milestone.goalId || ""} />
+                      <div className="absolute left-2 text-gray-400">
+                        <Plus className="h-4 w-4" />
+                      </div>
+                      <input
+                        name="title"
+                        required
+                        type="text"
+                        placeholder="Add task..."
+                        className="w-full bg-gray-50 border border-gray-200 rounded-md py-1.5 pl-8 pr-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white transition-colors"
+                      />
+                      <button type="submit" className="hidden">Add</button>
+                    </form>
                   </div>
                 </div>
               </div>
