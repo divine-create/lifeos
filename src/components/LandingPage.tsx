@@ -5,8 +5,9 @@ export function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        <div className="flex items-center gap-2">
+      <header className="relative z-50">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+          <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
             <Zap className="h-5 w-5 text-white" />
           </div>
@@ -24,6 +25,7 @@ export function LandingPage() {
           </a>
         </div>
       </nav>
+      </header>
 
       {/* Hero Section */}
       <div className="relative isolate pt-14">
