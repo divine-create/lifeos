@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Flame, Check, X as XIcon, Trash2 } from "lucide-react";
 import { createTracker, logTrackerEntry, deleteTracker } from "@/app/actions";
+import toast from "react-hot-toast";
 
 export function TrackerWidget({ trackers }: { trackers: any[] }) {
   const [showForm, setShowForm] = useState(false);
@@ -31,7 +32,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                     {/* Log Actions based on Type */}
                     <div className="flex items-center gap-2">
                       {tracker.type === "BOOLEAN" && (
-                        <form action={logTrackerEntry}>
+                        <form action={async (formData) => { await logTrackerEntry(formData); toast.success("Saved"); }}>
                           <input type="hidden" name="trackerId" value={tracker.id} />
                           {todayLog?.status === "Successful" && <input type="hidden" name="toggleOff" value="true" />}
                           <button type="submit" className={`flex h-7 w-7 items-center justify-center rounded-full border ${todayLog?.status === "Successful" ? "bg-green-500 border-green-500 text-white" : "border-gray-300 text-transparent hover:border-green-500"}`}>
@@ -41,7 +42,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                       )}
 
                       {tracker.type === "ABSTINENCE" && (
-                        <form action={logTrackerEntry}>
+                        <form action={async (formData) => { await logTrackerEntry(formData); toast.success("Saved"); }}>
                           <input type="hidden" name="trackerId" value={tracker.id} />
                           <input type="hidden" name="status" value="Failed" />
                           {todayLog?.status === "Failed" && <input type="hidden" name="toggleOff" value="true" />}
@@ -52,7 +53,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                       )}
 
                       {(tracker.type === "QUANTITY" || tracker.type === "DURATION" || tracker.type === "COUNTER") && (
-                        <form action={logTrackerEntry} className="flex items-center gap-1">
+                        <form action={async (formData) => { await logTrackerEntry(formData); toast.success("Saved"); }} className="flex items-center gap-1">
                           <input type="hidden" name="trackerId" value={tracker.id} />
                           <input type="number" name="value" defaultValue={todayLog?.value || ""} placeholder={tracker.targetValue ? String(tracker.targetValue) : "0"} className="w-16 h-7 text-xs text-right border border-gray-300 rounded px-2" />
                           {tracker.unit && <span className="text-xs text-gray-500">{tracker.unit}</span>}
@@ -61,7 +62,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                       )}
 
                       {tracker.type === "RATING" && (
-                        <form action={logTrackerEntry} className="flex items-center gap-1">
+                        <form action={async (formData) => { await logTrackerEntry(formData); toast.success("Saved"); }} className="flex items-center gap-1">
                           <input type="hidden" name="trackerId" value={tracker.id} />
                           <select name="value" defaultValue={todayLog?.value || ""} className="h-7 text-xs border border-gray-300 rounded pl-1 pr-4">
                             <option value="">-</option>
@@ -75,7 +76,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
 
                   {/* Delete Button (hover only) */}
                   <div className="absolute -top-2 -right-2 hidden group-hover:block">
-                    <form action={() => deleteTracker(tracker.id)}>
+                    <form action={async () => { await deleteTracker(tracker.id); toast.success("Tracker deleted"); }}>
                       <button type="submit" className="p-1 bg-white rounded-full border border-gray-200 text-red-500 shadow-sm hover:bg-red-50"><Trash2 className="h-3 w-3" /></button>
                     </form>
                   </div>
@@ -100,7 +101,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
               <Plus className="h-4 w-4" /> Create Custom Tracker
             </button>
           ) : (
-            <form action={(data) => { createTracker(data); setShowForm(false); }} className="space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
+            <form action={(data) => { await createTracker(data); setShowForm(false); toast.success("Tracker created"); }} className="space-y-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
               <div className="flex justify-between items-center mb-1">
                 <span className="text-xs font-bold text-gray-700">New Tracker</span>
                 <button type="button" onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-600"><XIcon className="h-4 w-4" /></button>
