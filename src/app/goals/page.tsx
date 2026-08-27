@@ -60,16 +60,22 @@ export default async function GoalsPage() {
             <label htmlFor="type" className="text-sm font-medium text-gray-700">
               Type
             </label>
-            <select
+            <input
               id="type"
               name="type"
+              list="goal-types"
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
               defaultValue="Achievement"
-            >
-              <option value="Achievement">Achievement</option>
-              <option value="Learning">Learning</option>
-              <option value="Habit">Habit</option>
-            </select>
+              placeholder="e.g. Finance, Health"
+            />
+            <datalist id="goal-types">
+              <option value="Achievement" />
+              <option value="Learning" />
+              <option value="Habit" />
+              <option value="Career" />
+              <option value="Health" />
+              <option value="Finance" />
+            </datalist>
           </div>
           <button
             type="submit"
