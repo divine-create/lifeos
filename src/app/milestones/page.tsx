@@ -1,120 +1,210 @@
-import { Flag, CheckCircle2, Circle, Clock } from "lucide-react";
+import { Flag, Plus, Clock, CheckCircle2, Circle } from "lucide-react";
+import { getMilestones, createMilestone, getGoals } from "@/app/actions";
 
-export default function MilestonesPage() {
-  const milestones = [
-    {
-      id: "1",
-      title: "Complete ML Course 1 & 2",
-      goal: "ML Specialization",
-      deadline: "Sep 15, 2026",
-      status: "Completed",
-      progress: 100,
-      tasks: [
-        { title: "Finish all Course 1 assignments", done: true },
-        { title: "Finish all Course 2 assignments", done: true },
-        { title: "Write summary notes", done: true },
-      ],
-    },
-    {
-      id: "2",
-      title: "CLATS MVP Launch",
-      goal: "Launch SaaS Product",
-      deadline: "Oct 1, 2026",
-      status: "In Progress",
-      progress: 58,
-      tasks: [
-        { title: "User authentication flow", done: true },
-        { title: "Lab test scheduling module", done: true },
-        { title: "Payment integration", done: false },
-        { title: "Admin dashboard", done: false },
-        { title: "Deploy to production", done: false },
-      ],
-    },
-    {
-      id: "3",
-      title: "Complete ML Course 3",
-      goal: "ML Specialization",
-      deadline: "Oct 15, 2026",
-      status: "Not Started",
-      progress: 0,
-      tasks: [
-        { title: "Watch all lecture videos", done: false },
-        { title: "Complete programming assignments", done: false },
-        { title: "Pass final quiz", done: false },
-      ],
-    },
-  ];
+export default async function MilestonesPage() {
+  const [milestones, goals] = await Promise.all([
+    getMilestones(),
+    getGoals(),
+  ]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Milestones</h1>
       </div>
 
-      <div className="space-y-6">
-        {milestones.map((milestone) => (
-          <div key={milestone.id} className="rounded-xl border bg-white p-6 shadow-sm">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-start gap-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-                  milestone.status === "Completed" ? "bg-green-50" : "bg-orange-50"
-                }`}>
-                  <Flag className={`h-5 w-5 ${
-                    milestone.status === "Completed" ? "text-green-600" : "text-orange-600"
-                  }`} />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold">{milestone.title}</h2>
-                  <p className="text-sm text-gray-500">{milestone.goal}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                  milestone.status === "Completed"
-                    ? "bg-green-50 text-green-700 ring-green-600/20"
-                    : milestone.status === "In Progress"
-                    ? "bg-blue-50 text-blue-700 ring-blue-600/20"
-                    : "bg-gray-50 text-gray-600 ring-gray-500/10"
-                }`}>
-                  {milestone.status}
-                </span>
-                <div className="flex items-center gap-1 text-xs text-gray-400 mt-2">
-                  <Clock className="h-3 w-3" />
-                  {milestone.deadline}
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-sm">
-                <span className="font-medium">Progress</span>
-                <span className="text-gray-500">{milestone.progress}%</span>
-              </div>
-              <div className="h-2 w-full rounded-full bg-gray-100">
-                <div className={`h-2 rounded-full transition-all ${
-                  milestone.status === "Completed" ? "bg-green-500" : "bg-black"
-                }`} style={{ width: `${milestone.progress}%` }} />
-              </div>
-            </div>
-
-            <div className="border-t pt-4">
-              <p className="text-xs font-semibold text-gray-500 mb-3">KEY TASKS</p>
-              <ul className="space-y-2">
-                {milestone.tasks.map((task, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm">
-                    {task.done ? (
-                      <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
-                    ) : (
-                      <Circle className="h-4 w-4 text-gray-300 flex-shrink-0" />
-                    )}
-                    <span className={task.done ? "text-gray-400 line-through" : ""}>{task.title}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold mb-4">Create New Milestone</h2>
+        <form action={createMilestone} className="grid gap-4 md:grid-cols-4 items-end">
+          <div className="space-y-1 md:col-span-1">
+            <label className="text-sm font-medium text-gray-700">Milestone Title</label>
+            <input
+              name="title"
+              required
+              type="text"
+              placeholder="e.g. Complete MVP Phase 1"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
           </div>
-        ))}
+          <div className="space-y-1 md:col-span-1">
+            <label className="text-sm font-medium text-gray-700">Linked Goal</label>
+            <select
+              name="goalId"
+              required
+              defaultValue={goals[0]?.id || ""}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            >
+              {goals.length === 0 ? (
+                <option value="" disabled>
+                  No goals found — create a goal first
+                </option>
+              ) : (
+                <>
+                  <option value="" disabled>
+                    Select a goal
+                  </option>
+                  {goals.map((goal) => (
+                    <option key={goal.id} value={goal.id}>
+                      {goal.title}
+                    </option>
+                  ))}
+                </>
+              )}
+            </select>
+          </div>
+          <div className="space-y-1 md:col-span-1">
+            <label className="text-sm font-medium text-gray-700">Deadline</label>
+            <input
+              name="deadline"
+              type="date"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
+          <div className="md:col-span-1">
+            <button
+              type="submit"
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px]"
+            >
+              <Plus className="h-4 w-4" />
+              Add Milestone
+            </button>
+          </div>
+        </form>
       </div>
+
+      {milestones.length === 0 ? (
+        <div className="rounded-xl border border-dashed bg-white p-12 text-center shadow-sm">
+          <Flag className="mx-auto h-12 w-12 text-gray-300 mb-3" />
+          <p className="text-gray-500 font-medium">
+            No milestones yet. Create your first milestone above!
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2">
+          {milestones.map((milestone) => {
+            const totalTasks = milestone.tasks?.length || 0;
+            const doneTasks =
+              milestone.tasks?.filter((task) => task.status === "Done").length || 0;
+            const progress =
+              totalTasks > 0
+                ? Math.round((doneTasks / totalTasks) * 100)
+                : milestone.status === "Completed"
+                ? 100
+                : Math.round(milestone.progress || 0);
+            const isCompleted =
+              milestone.status === "Completed" ||
+              (totalTasks > 0 && doneTasks === totalTasks);
+
+            const deadlineFormatted = milestone.deadline
+              ? new Date(milestone.deadline).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              : null;
+
+            return (
+              <div
+                key={milestone.id}
+                className="rounded-xl border bg-white p-6 shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`flex h-10 w-10 items-center justify-center rounded-lg shrink-0 ${
+                          isCompleted ? "bg-green-50" : "bg-orange-50"
+                        }`}
+                      >
+                        <Flag
+                          className={`h-5 w-5 ${
+                            isCompleted ? "text-green-600" : "text-orange-600"
+                          }`}
+                        />
+                      </div>
+                      <div>
+                        <h2 className="text-lg font-semibold">{milestone.title}</h2>
+                        {milestone.goal?.title && (
+                          <p className="text-sm text-gray-500">{milestone.goal.title}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
+                          isCompleted
+                            ? "bg-green-50 text-green-700 ring-green-600/20"
+                            : milestone.status === "In Progress"
+                            ? "bg-blue-50 text-blue-700 ring-blue-600/20"
+                            : "bg-gray-50 text-gray-600 ring-gray-500/10"
+                        }`}
+                      >
+                        {milestone.status}
+                      </span>
+                      {deadlineFormatted && (
+                        <div className="flex items-center justify-end gap-1 text-xs text-gray-400 mt-2">
+                          <Clock className="h-3 w-3" />
+                          {deadlineFormatted}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 mb-6">
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">Progress</span>
+                      <span className="text-gray-500">
+                        {progress}% {totalTasks > 0 && `(${doneTasks}/${totalTasks} tasks)`}
+                      </span>
+                    </div>
+                    <div className="h-2 w-full rounded-full bg-gray-100">
+                      <div
+                        className={`h-2 rounded-full transition-all ${
+                          isCompleted ? "bg-green-500" : "bg-black"
+                        }`}
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                      Tasks
+                    </h3>
+                    {milestone.tasks && milestone.tasks.length > 0 ? (
+                      <ul className="space-y-2">
+                        {milestone.tasks.map((task) => {
+                          const isTaskDone = task.status === "Done";
+                          return (
+                            <li key={task.id} className="flex items-center gap-2">
+                              {isTaskDone ? (
+                                <CheckCircle2 className="h-4 w-4 text-green-600 shrink-0" />
+                              ) : (
+                                <Circle className="h-4 w-4 text-gray-300 shrink-0" />
+                              )}
+                              <span
+                                className={`text-sm ${
+                                  isTaskDone
+                                    ? "text-gray-400 line-through"
+                                    : "text-gray-700"
+                                }`}
+                              >
+                                {task.title}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-gray-400 italic">No tasks linked yet</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

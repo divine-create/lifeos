@@ -1,183 +1,310 @@
-import { BookOpen, Plus, Play, CheckCircle2, Clock, BarChart3 } from "lucide-react";
+import Link from "next/link";
+import { BookOpen, Clock, BarChart3, Plus, Trash2 } from "lucide-react";
+import { getGoals, getActivities, createGoal, deleteGoal } from "@/app/actions";
 
-export default function LearningPage() {
-  const courses = [
-    {
-      id: "1",
-      title: "Machine Learning Specialization",
-      provider: "Coursera / Stanford",
-      status: "In Progress",
-      progress: 68,
-      totalModules: 12,
-      completedModules: 8,
-      weeklyTarget: "10 hours",
-      currentStreak: 14,
-      nextLesson: "Week 9: Anomaly Detection",
-      notes: "Need to review backpropagation math before moving forward.",
-    },
-    {
-      id: "2",
-      title: "System Design Interview",
-      provider: "Self-study / Book",
-      status: "In Progress",
-      progress: 40,
-      totalModules: 15,
-      completedModules: 6,
-      weeklyTarget: "5 hours",
-      currentStreak: 3,
-      nextLesson: "Chapter 7: Design a URL Shortener",
-      notes: "Practice drawing diagrams on whiteboard.",
-    },
-    {
-      id: "3",
-      title: "Advanced TypeScript Patterns",
-      provider: "Matt Pocock / Total TypeScript",
-      status: "Queued",
-      progress: 0,
-      totalModules: 8,
-      completedModules: 0,
-      weeklyTarget: "—",
-      currentStreak: 0,
-      nextLesson: "Module 1: Type Transformations",
-      notes: "Start after ML specialization is complete.",
-    },
-  ];
+export default async function LearningPage() {
+  const [goals, activities] = await Promise.all([
+    getGoals(),
+    getActivities(),
+  ]);
 
-  const recentLogs = [
-    { date: "Today", topic: "Neural Networks - Batch Normalization", duration: "2h 15m", quality: 4 },
-    { date: "Yesterday", topic: "System Design - Rate Limiter", duration: "1h 30m", quality: 5 },
-    { date: "Aug 25", topic: "ML - Regularization Techniques", duration: "3h 00m", quality: 3 },
-    { date: "Aug 24", topic: "ML - Decision Trees & Random Forests", duration: "2h 45m", quality: 4 },
-  ];
+  // Filter goals where goal.type === 'Learning'
+  const learningGoals = goals.filter(
+    (goal) => goal.type?.toLowerCase() === "learning"
+  );
+
+  // Filter activities where type includes 'Study'
+  const studyActivities = activities.filter((activity) =>
+    activity.type?.toLowerCase().includes("study")
+  );
+
+  // Calculate start of current week (Monday at 00:00:00)
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const distanceToMonday = (dayOfWeek + 6) % 7;
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - distanceToMonday);
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  // Sum actualDuration for total study time this week
+  const thisWeekStudyActivities = studyActivities.filter((activity) => {
+    if (!activity.startTime) return false;
+    const actDate = new Date(activity.startTime);
+    return actDate >= startOfWeek && actDate <= now;
+  });
+
+  const totalWeeklyStudyMinutes = thisWeekStudyActivities.reduce(
+    (sum, activity) => sum + (activity.actualDuration || activity.plannedDuration || 0),
+    0
+  );
+
+  const weeklyHours = Math.floor(totalWeeklyStudyMinutes / 60);
+  const weeklyMinutes = totalWeeklyStudyMinutes % 60;
+  const formattedWeeklyStudyTime =
+    weeklyHours > 0
+      ? `${weeklyHours}h ${weeklyMinutes > 0 ? `${weeklyMinutes}m` : ""}`.trim()
+      : `${weeklyMinutes}m`;
+
+  const getStatusBadgeClass = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "active":
+      case "on track":
+        return "bg-green-50 text-green-700 ring-green-600/20";
+      case "completed":
+        return "bg-blue-50 text-blue-700 ring-blue-600/20";
+      case "at risk":
+        return "bg-yellow-50 text-yellow-800 ring-yellow-600/20";
+      case "paused":
+        return "bg-orange-50 text-orange-700 ring-orange-600/20";
+      case "draft":
+        return "bg-gray-50 text-gray-700 ring-gray-600/20";
+      default:
+        return "bg-gray-50 text-gray-600 ring-gray-500/10";
+    }
+  };
 
   return (
     <div className="space-y-8">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Learning</h1>
-        <button className="flex items-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition">
-          <Plus className="h-4 w-4" />
-          Add Course
-        </button>
       </div>
 
-      {/* Stats */}
+      {/* Study Stats */}
       <div className="grid gap-6 md:grid-cols-3">
         <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h3 className="text-sm font-semibold text-gray-500">Weekly Study Hours</h3>
-          <p className="text-3xl font-bold mt-2">12.5h</p>
-          <p className="text-sm text-green-600 mt-1">↑ 2.5h vs last week</p>
-        </div>
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h3 className="text-sm font-semibold text-gray-500">Active Courses</h3>
-          <p className="text-3xl font-bold mt-2">2</p>
-          <p className="text-sm text-gray-500 mt-1">1 queued</p>
-        </div>
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h3 className="text-sm font-semibold text-gray-500">Longest Streak</h3>
-          <p className="text-3xl font-bold mt-2">14 days</p>
-          <p className="text-sm text-gray-500 mt-1">ML Specialization</p>
-        </div>
-      </div>
-
-      {/* Courses */}
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Courses & Programs</h2>
-        {courses.map((course) => (
-          <div key={course.id} className="rounded-xl border bg-white p-6 shadow-sm">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-                  <BookOpen className="h-5 w-5 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">{course.title}</h3>
-                  <p className="text-sm text-gray-500">{course.provider}</p>
-                </div>
-              </div>
-              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                course.status === "In Progress"
-                  ? "bg-blue-50 text-blue-700 ring-blue-600/20"
-                  : "bg-gray-50 text-gray-600 ring-gray-500/10"
-              }`}>
-                {course.status}
-              </span>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-500">Weekly Study Time</h3>
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+              <Clock className="h-5 w-5" />
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
-              <div>
-                <p className="text-gray-500">Modules</p>
-                <p className="font-semibold">{course.completedModules} / {course.totalModules}</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Weekly Target</p>
-                <p className="font-semibold">{course.weeklyTarget}</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Current Streak</p>
-                <p className="font-semibold">{course.currentStreak} days</p>
-              </div>
-              <div>
-                <p className="text-gray-500">Next Up</p>
-                <p className="font-semibold truncate">{course.nextLesson}</p>
-              </div>
-            </div>
-
-            <div className="space-y-2 mb-3">
-              <div className="flex justify-between text-sm">
-                <span className="font-medium">Progress</span>
-                <span className="text-gray-500">{course.progress}%</span>
-              </div>
-              <div className="h-2 w-full rounded-full bg-gray-100">
-                <div className="h-2 rounded-full bg-black transition-all" style={{ width: `${course.progress}%` }} />
-              </div>
-            </div>
-
-            {course.notes && (
-              <p className="text-sm text-gray-500 italic border-l-2 border-gray-200 pl-3">
-                {course.notes}
-              </p>
-            )}
           </div>
-        ))}
+          <p className="text-3xl font-bold mt-3 text-gray-900">{formattedWeeklyStudyTime}</p>
+          <p className="text-sm text-gray-500 mt-1">
+            {thisWeekStudyActivities.length} session{thisWeekStudyActivities.length === 1 ? "" : "s"} this week
+          </p>
+        </div>
+
+        <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-500">Study Sessions</h3>
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+              <BookOpen className="h-5 w-5" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold mt-3 text-gray-900">{studyActivities.length}</p>
+          <p className="text-sm text-gray-500 mt-1">Total study activities logged</p>
+        </div>
+
+        <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-500">Learning Goals</h3>
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
+              <BarChart3 className="h-5 w-5" />
+            </div>
+          </div>
+          <p className="text-3xl font-bold mt-3 text-gray-900">{learningGoals.length}</p>
+          <p className="text-sm text-gray-500 mt-1">
+            {learningGoals.filter((g) => g.status?.toLowerCase() === "active" || g.status?.toLowerCase() === "on track").length} active
+          </p>
+        </div>
       </div>
 
-      {/* Recent Study Log */}
-      <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
-        <div className="border-b bg-gray-50/50 px-6 py-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-gray-500">RECENT STUDY LOG</h2>
-          <BarChart3 className="h-4 w-4 text-gray-400" />
+      {/* Create Learning Goal Form */}
+      <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <h2 className="text-lg font-semibold mb-4">Add Learning Goal</h2>
+        <form action={createGoal} className="flex flex-col sm:flex-row gap-4 items-end">
+          <input type="hidden" name="type" value="Learning" />
+          <div className="flex-1 w-full space-y-1">
+            <label htmlFor="title" className="text-sm font-medium text-gray-700">
+              Course / Topic Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              required
+              type="text"
+              placeholder="e.g. Master Distributed Systems"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
+          <div className="flex-1 w-full space-y-1">
+            <label htmlFor="description" className="text-sm font-medium text-gray-700">
+              Description / Resource
+            </label>
+            <input
+              id="description"
+              name="description"
+              type="text"
+              placeholder="e.g. Coursera / Stanford Online"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition h-[38px] whitespace-nowrap"
+          >
+            <Plus className="h-4 w-4" />
+            Add Goal
+          </button>
+        </form>
+      </div>
+
+      {/* Courses / Learning Goals Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Courses & Learning Goals</h2>
         </div>
-        <table className="w-full text-sm text-left">
-          <thead className="text-gray-500 font-medium border-b">
-            <tr>
-              <th className="px-6 py-3">Date</th>
-              <th className="px-6 py-3">Topic</th>
-              <th className="px-6 py-3">Duration</th>
-              <th className="px-6 py-3">Quality</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y">
-            {recentLogs.map((log, i) => (
-              <tr key={i} className="hover:bg-gray-50">
-                <td className="px-6 py-3 text-gray-500">{log.date}</td>
-                <td className="px-6 py-3 font-medium">{log.topic}</td>
-                <td className="px-6 py-3 flex items-center gap-1.5">
-                  <Clock className="h-3.5 w-3.5 text-gray-400" />
-                  {log.duration}
-                </td>
-                <td className="px-6 py-3">
-                  <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                    log.quality >= 4
-                      ? "bg-green-50 text-green-700"
-                      : "bg-yellow-50 text-yellow-700"
-                  }`}>
-                    {log.quality}/5
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+        {learningGoals.length === 0 ? (
+          <div className="rounded-xl border border-dashed bg-white p-12 text-center shadow-sm">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 mb-4">
+              <BookOpen className="h-6 w-6 text-blue-600" />
+            </div>
+            <h3 className="text-base font-semibold text-gray-900">No learning goals yet</h3>
+            <p className="mt-1 text-sm text-gray-500 max-w-sm mx-auto">
+              No learning goals yet. Create a Learning type goal in the Goals page to get started!
+            </p>
+            <div className="mt-4">
+              <Link
+                href="/goals"
+                className="inline-flex items-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
+              >
+                Go to Goals
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2">
+            {learningGoals.map((goal) => {
+              const progress = Math.min(100, Math.max(0, Math.round(goal.progress || 0)));
+              const deleteAction = deleteGoal.bind(null, goal.id);
+
+              return (
+                <div key={goal.id} className="rounded-xl border bg-white p-6 shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div className="flex items-start gap-3">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                          <BookOpen className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">{goal.title}</h3>
+                          {goal.description && (
+                            <p className="text-sm text-gray-500 mt-1">{goal.description}</p>
+                          )}
+                        </div>
+                      </div>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${getStatusBadgeClass(
+                          goal.status
+                        )}`}
+                      >
+                        {goal.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-xs text-gray-500 font-medium">
+                        <span>Progress</span>
+                        <span>{progress}%</span>
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t text-xs text-gray-400">
+                      <span>Created {new Date(goal.createdAt).toLocaleDateString()}</span>
+                      <form action={deleteAction}>
+                        <button
+                          type="submit"
+                          className="text-gray-400 hover:text-red-600 transition p-1"
+                          title="Delete Goal"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Recent Study Log Table */}
+      <div className="space-y-4">
+        <h2 className="text-lg font-semibold">Recent Study Log</h2>
+        <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
+          {studyActivities.length === 0 ? (
+            <div className="p-8 text-center text-sm text-gray-500">
+              No study activities recorded yet.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-gray-50 text-gray-500 font-medium border-b">
+                  <tr>
+                    <th className="px-6 py-4">Date</th>
+                    <th className="px-6 py-4">Notes / Topic</th>
+                    <th className="px-6 py-4">Duration</th>
+                    <th className="px-6 py-4">Quality</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {studyActivities.map((activity) => {
+                    const durationMinutes =
+                      activity.actualDuration ?? activity.plannedDuration ?? 0;
+                    const hours = Math.floor(durationMinutes / 60);
+                    const mins = durationMinutes % 60;
+                    const durationDisplay =
+                      hours > 0
+                        ? `${hours}h ${mins > 0 ? `${mins}m` : ""}`.trim()
+                        : `${mins}m`;
+
+                    const formattedDate = activity.startTime
+                      ? new Date(activity.startTime).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })
+                      : "—";
+
+                    return (
+                      <tr key={activity.id} className="hover:bg-gray-50 transition">
+                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                          {formattedDate}
+                        </td>
+                        <td className="px-6 py-4 text-gray-600 max-w-xs truncate">
+                          {activity.notes || "—"}
+                        </td>
+                        <td className="px-6 py-4 text-gray-900 font-medium whitespace-nowrap">
+                          {durationDisplay}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {activity.qualityRating ? (
+                            <span className="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                              {activity.qualityRating}/5
+                            </span>
+                          ) : (
+                            <span className="text-gray-400">—</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
