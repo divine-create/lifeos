@@ -21,6 +21,19 @@ export async function getGoals() {
   if (!userId) return [];
   return prisma.goal.findMany({
     where: { userId },
+    include: {
+      milestones: {
+        include: {
+          projects: {
+            include: { tasks: true }
+          },
+          tasks: true
+        }
+      },
+      projects: {
+        include: { tasks: true }
+      }
+    },
     orderBy: { createdAt: "desc" },
   });
 }
@@ -51,7 +64,7 @@ export async function createGoal(formData: FormData) {
     });
   }
 
-  revalidatePath("/goals");
+  revalidatePath("/planning");
   revalidatePath("/");
 }
 
@@ -59,7 +72,7 @@ export async function deleteGoal(goalId: string) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
   await prisma.goal.delete({ where: { id: goalId, userId } });
-  revalidatePath("/goals");
+  revalidatePath("/planning");
   revalidatePath("/");
 }
 
@@ -70,7 +83,7 @@ export async function getTasks() {
   if (!userId) return [];
   return prisma.task.findMany({
     where: { userId },
-    include: { project: true, goal: true },
+    include: { project: true, goal: true, milestone: true },
     orderBy: { createdAt: "desc" },
   });
 }
@@ -102,9 +115,9 @@ export async function createTask(formData: FormData) {
     },
   });
   revalidatePath("/execution");
-  revalidatePath("/milestones");
-  revalidatePath("/projects");
-  revalidatePath("/goals");
+  revalidatePath("/planning");
+  revalidatePath("/planning");
+  revalidatePath("/planning");
   revalidatePath("/");
 }
 
@@ -116,8 +129,8 @@ export async function toggleTaskStatus(taskId: string, currentStatus: string) {
     data: { status: currentStatus === "Done" ? "Todo" : "Done" },
   });
   revalidatePath("/execution");
-  revalidatePath("/milestones");
-  revalidatePath("/projects");
+  revalidatePath("/planning");
+  revalidatePath("/planning");
   revalidatePath("/");
 }
 
@@ -159,7 +172,7 @@ export async function createProject(formData: FormData) {
       goalId: goalId || null,
     },
   });
-  revalidatePath("/projects");
+  revalidatePath("/planning");
   revalidatePath("/");
 }
 
@@ -167,7 +180,7 @@ export async function deleteProject(projectId: string) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
   await prisma.project.delete({ where: { id: projectId, userId } });
-  revalidatePath("/projects");
+  revalidatePath("/planning");
 }
 
 // ─── MILESTONES ───────────────────────────────────
@@ -200,7 +213,7 @@ export async function createMilestone(formData: FormData) {
       status: "Pending",
     },
   });
-  revalidatePath("/milestones");
+  revalidatePath("/planning");
 }
 
 // ─── ACTIVITIES ───────────────────────────────────
@@ -239,7 +252,7 @@ export async function createActivity(formData: FormData) {
       notes: (formData.get("notes") as string) || null,
     },
   });
-  revalidatePath("/activities");
+  revalidatePath("/logbook");
   revalidatePath("/");
 }
 
@@ -413,7 +426,7 @@ export async function logFocusActivity(title: string, durationMinutes: number) {
       notes: title || "Unlabeled Focus Session",
     },
   });
-  revalidatePath("/activities");
+  revalidatePath("/logbook");
   revalidatePath("/");
 }
 
@@ -450,7 +463,7 @@ export async function createGoalType(formData: FormData) {
   });
   
   revalidatePath("/settings");
-  revalidatePath("/goals");
+  revalidatePath("/planning");
 }
 
 export async function deleteGoalType(id: string) {
@@ -462,7 +475,7 @@ export async function deleteGoalType(id: string) {
   });
   
   revalidatePath("/settings");
-  revalidatePath("/goals");
+  revalidatePath("/planning");
 }
 
 export async function updateGoal(id: string, formData: FormData) {
@@ -478,7 +491,7 @@ export async function updateGoal(id: string, formData: FormData) {
       status: formData.get("status") as string,
     },
   });
-  revalidatePath("/goals");
+  revalidatePath("/planning");
   revalidatePath("/");
 }
 

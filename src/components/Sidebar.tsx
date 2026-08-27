@@ -30,9 +30,7 @@ export function Sidebar() {
     {
       title: "PLANNING",
       items: [
-        { name: "Goals", href: "/goals", icon: Target, color: "text-red-500" },
-        { name: "Milestones", href: "/milestones", icon: Flag, color: "text-orange-500" },
-        { name: "Projects", href: "/projects", icon: FolderKanban, color: "text-indigo-500" },
+        { name: "Vision Board", href: "/planning", icon: Target, color: "text-red-500" },
       ]
     },
     {
@@ -44,8 +42,7 @@ export function Sidebar() {
     {
       title: "REVIEW",
       items: [
-        { name: "Activities", href: "/activities", icon: Activity, color: "text-purple-500" },
-        { name: "Learning", href: "/learning", icon: BookOpen, color: "text-yellow-600" },
+        { name: "Logbook", href: "/logbook", icon: Activity, color: "text-purple-500" },
       ]
     }
   ];

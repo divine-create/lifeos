@@ -51,16 +51,39 @@ export default async function ExecutionHubPage() {
                   const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
                   const deleteAction = deleteTask.bind(null, task.id);
                   return (
-                    <li key={task.id} className="group flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-colors">
-                      <form action={toggleAction} className="flex-shrink-0">
-                        <button type="submit" className="text-gray-300 hover:text-blue-500 mt-0.5"><Circle className="h-4 w-4" /></button>
-                      </form>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-800 truncate">{task.title}</p>
+                    <li key={task.id} className="group flex flex-col p-2 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <form action={toggleAction} className="flex-shrink-0">
+                          <button type="submit" className="text-gray-300 hover:text-blue-500 mt-0.5"><Circle className="h-4 w-4" /></button>
+                        </form>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-gray-800 truncate">{task.title}</p>
+                        </div>
+                        <form action={deleteAction} className="opacity-0 group-hover:opacity-100">
+                          <button type="submit" className="text-gray-400 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
+                        </form>
                       </div>
-                      <form action={deleteAction} className="opacity-0 group-hover:opacity-100">
-                        <button type="submit" className="text-gray-400 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
-                      </form>
+                      
+                      {/* Context Badges */}
+                      {(task.goal || task.project || task.milestone) && (
+                        <div className="flex flex-wrap gap-1 mt-1 pl-7">
+                          {task.goal && (
+                            <span className="inline-flex items-center rounded-sm bg-purple-50 px-1.5 py-0.5 text-[10px] font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">
+                              Goal: {task.goal.title}
+                            </span>
+                          )}
+                          {task.milestone && (
+                            <span className="inline-flex items-center rounded-sm bg-orange-50 px-1.5 py-0.5 text-[10px] font-medium text-orange-700 ring-1 ring-inset ring-orange-700/10">
+                              Milestone: {task.milestone.title}
+                            </span>
+                          )}
+                          {task.project && (
+                            <span className="inline-flex items-center rounded-sm bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                              Project: {task.project.title}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </li>
                   );
                 })}
@@ -73,16 +96,39 @@ export default async function ExecutionHubPage() {
                       const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
                       const deleteAction = deleteTask.bind(null, task.id);
                       return (
-                        <li key={task.id} className="group flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50">
-                          <form action={toggleAction} className="flex-shrink-0">
-                            <button type="submit" className="text-blue-500 mt-0.5"><CheckCircle2 className="h-4 w-4" /></button>
-                          </form>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm text-gray-500 line-through truncate">{task.title}</p>
+                        <li key={task.id} className="group flex flex-col p-2 rounded-lg hover:bg-gray-50">
+                          <div className="flex items-center gap-3">
+                            <form action={toggleAction} className="flex-shrink-0">
+                              <button type="submit" className="text-blue-500 mt-0.5"><CheckCircle2 className="h-4 w-4" /></button>
+                            </form>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-gray-500 line-through truncate">{task.title}</p>
+                            </div>
+                            <form action={deleteAction} className="opacity-0 group-hover:opacity-100">
+                              <button type="submit" className="text-gray-400 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
+                            </form>
                           </div>
-                          <form action={deleteAction} className="opacity-0 group-hover:opacity-100">
-                            <button type="submit" className="text-gray-400 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
-                          </form>
+                          
+                          {/* Context Badges */}
+                          {(task.goal || task.project || task.milestone) && (
+                            <div className="flex flex-wrap gap-1 mt-1 pl-7 opacity-75">
+                              {task.goal && (
+                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+                                  Goal: {task.goal.title}
+                                </span>
+                              )}
+                              {task.milestone && (
+                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+                                  Milestone: {task.milestone.title}
+                                </span>
+                              )}
+                              {task.project && (
+                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+                                  Project: {task.project.title}
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </li>
                       );
                     })}

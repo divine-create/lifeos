@@ -26,6 +26,7 @@ import {
   Check,
 } from "lucide-react";
 import { LandingPage } from "@/components/LandingPage";
+import { DashboardWidgets } from "@/components/DashboardWidgets";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -167,6 +168,8 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
+      
+      <DashboardWidgets />
 
       {/* Main Grid: Priorities, Goals & Discipline */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
