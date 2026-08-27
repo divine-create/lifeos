@@ -34,7 +34,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                         <form action={logTrackerEntry}>
                           <input type="hidden" name="trackerId" value={tracker.id} />
                           {todayLog?.status === "Successful" && <input type="hidden" name="toggleOff" value="true" />}
-                          <button type="submit" className={\lex h-7 w-7 items-center justify-center rounded-full border \\}>
+                          <button type="submit" className={`flex h-7 w-7 items-center justify-center rounded-full border ${todayLog?.status === "Successful" ? "bg-green-500 border-green-500 text-white" : "border-gray-300 text-transparent hover:border-green-500"}`}>
                             <Check className="h-4 w-4" />
                           </button>
                         </form>
@@ -45,7 +45,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                           <input type="hidden" name="trackerId" value={tracker.id} />
                           <input type="hidden" name="status" value="Failed" />
                           {todayLog?.status === "Failed" && <input type="hidden" name="toggleOff" value="true" />}
-                          <button type="submit" className={\px-3 py-1 rounded text-xs font-medium border \\}>
+                          <button type="submit" className={`px-3 py-1 rounded text-xs font-medium border ${todayLog?.status === "Failed" ? "bg-red-500 border-red-500 text-white" : "border-gray-300 text-gray-500 hover:border-red-500 hover:text-red-500"}`}>
                             {todayLog?.status === "Failed" ? "Failed" : "Fail"}
                           </button>
                         </form>
