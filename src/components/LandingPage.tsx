@@ -13,15 +13,15 @@ export function LandingPage() {
           <span className="text-xl font-bold tracking-tight text-gray-900">LifeOS</span>
         </div>
         <div className="flex items-center gap-4">
-          <Link href="/api/auth/signin" className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-600 transition">
+          <a href="/api/auth/signin" className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-600 transition">
             Log in
-          </Link>
-          <Link
+          </a>
+          <a
             href="/api/auth/signin"
             className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition"
           >
             Get started
-          </Link>
+          </a>
         </div>
       </nav>
 
@@ -41,12 +41,12 @@ export function LandingPage() {
                 Stop juggling multiple apps. LifeOS integrates your goals, daily tasks, learning paths, and personal discipline into one centralized, powerful dashboard.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link
+                <a
                   href="/api/auth/signin"
                   className="rounded-full bg-blue-600 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition flex items-center gap-2"
                 >
                   Start your journey <ArrowRight className="h-4 w-4" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -130,12 +130,12 @@ export function LandingPage() {
             <span className="text-blue-600">Start using LifeOS today.</span>
           </h2>
           <div className="mt-10 flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
-            <Link
+            <a
               href="/api/auth/signin"
               className="rounded-full bg-blue-600 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition"
             >
               Sign up with Google
-            </Link>
+            </a>
           </div>
         </div>
       </div>
