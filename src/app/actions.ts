@@ -29,7 +29,7 @@ export async function createGoal(formData: FormData) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
 
-  await prisma.goal.create({
+  const goal = await prisma.goal.create({
     data: {
       userId,
       title: formData.get("title") as string,
@@ -38,6 +38,19 @@ export async function createGoal(formData: FormData) {
       status: "Active",
     },
   });
+
+  const milestoneTitle = formData.get("milestoneTitle") as string;
+  if (milestoneTitle && milestoneTitle.trim() !== "") {
+    await prisma.milestone.create({
+      data: {
+        userId,
+        goalId: goal.id,
+        title: milestoneTitle.trim(),
+        status: "Pending",
+      },
+    });
+  }
+
   revalidatePath("/goals");
   revalidatePath("/");
 }
@@ -385,6 +398,71 @@ export async function logFocusActivity(title: string, durationMinutes: number) {
     },
   });
   revalidatePath("/activities");
+  revalidatePath("/");
+}
+
+// ─── GOAL TYPES ────────────────────────────────────
+
+export async function getGoalTypes() {
+  const userId = await getUserId();
+  if (!userId) return [];
+  
+  // Ensure default types exist
+  const existingTypes = await prisma.goalType.findMany({ where: { userId } });
+  
+  if (existingTypes.length === 0) {
+    const defaults = ["Achievement", "Learning", "Habit", "Health", "Career", "Finance"];
+    await prisma.goalType.createMany({
+      data: defaults.map(name => ({ userId, name })),
+      skipDuplicates: true
+    });
+    return prisma.goalType.findMany({ where: { userId } });
+  }
+  
+  return existingTypes;
+}
+
+export async function createGoalType(formData: FormData) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  const name = formData.get("name") as string;
+  if (!name || name.trim() === "") return;
+
+  await prisma.goalType.create({
+    data: { userId, name: name.trim() },
+  });
+  
+  revalidatePath("/settings");
+  revalidatePath("/goals");
+}
+
+export async function deleteGoalType(id: string) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  await prisma.goalType.delete({
+    where: { id, userId },
+  });
+  
+  revalidatePath("/settings");
+  revalidatePath("/goals");
+}
+
+export async function updateGoal(id: string, formData: FormData) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+
+  await prisma.goal.update({
+    where: { id, userId },
+    data: {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      type: formData.get("type") as string,
+      status: formData.get("status") as string,
+    },
+  });
+  revalidatePath("/goals");
   revalidatePath("/");
 }
 

@@ -54,6 +54,7 @@ model User {
   activities    Activity[]
   trackers      Tracker[]
   scheduleSlots ScheduleSlot[]
+  goalTypes     GoalType[]
 }
 
 model VerificationToken {
@@ -220,4 +221,17 @@ model ScheduleSlot {
   updatedAt   DateTime @updatedAt
 
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GoalType {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, name])
 }
