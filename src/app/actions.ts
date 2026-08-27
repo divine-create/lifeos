@@ -277,12 +277,17 @@ export async function createTracker(formData: FormData) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
 
+  const targetValueStr = formData.get("targetValue") as string;
+  const targetValue = targetValueStr ? parseFloat(targetValueStr) : null;
+
   await prisma.tracker.create({
     data: {
       userId,
       title: formData.get("title") as string,
-      type: (formData.get("type") as string) || "Positive Habit",
-      frequency: (formData.get("frequency") as string) || "Daily",
+      type: (formData.get("type") as string) || "BOOLEAN",
+      frequency: (formData.get("frequency") as string) || "DAILY",
+      targetValue,
+      unit: (formData.get("unit") as string) || null,
     },
   });
   revalidatePath("/");
@@ -293,36 +298,49 @@ export async function logTrackerEntry(formData: FormData) {
   if (!userId) throw new Error("Not authenticated");
 
   const trackerId = formData.get("trackerId") as string;
-  // Verify ownership
   const tracker = await prisma.tracker.findFirst({ where: { id: trackerId, userId } });
   if (!tracker) throw new Error("Tracker not found");
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const valueStr = formData.get("value") as string;
+  const value = valueStr ? parseFloat(valueStr) : 1;
+  const status = (formData.get("status") as string) || "Successful";
+  
+  const dateStr = formData.get("date") as string;
+  const logDate = dateStr ? new Date(dateStr) : new Date();
+  logDate.setHours(0, 0, 0, 0);
 
-  // Upsert today's log
   const existing = await prisma.trackerLog.findFirst({
-    where: { trackerId, date: today },
+    where: { trackerId, date: logDate },
   });
 
   if (existing) {
-    await prisma.trackerLog.update({
-      where: { id: existing.id },
-      data: {
-        value: 1,
-        status: "Successful",
-      },
-    });
+    const isToggleOff = formData.get("toggleOff") === "true";
+    if (isToggleOff) {
+      await prisma.trackerLog.delete({ where: { id: existing.id } });
+    } else {
+      await prisma.trackerLog.update({
+        where: { id: existing.id },
+        data: { value, status },
+      });
+    }
   } else {
     await prisma.trackerLog.create({
       data: {
         trackerId,
-        date: today,
-        value: 1,
-        status: "Successful",
+        date: logDate,
+        value,
+        status,
       },
     });
   }
+  revalidatePath("/");
+  revalidatePath("/logbook");
+}
+
+export async function deleteTracker(id: string) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+  await prisma.tracker.delete({ where: { id, userId } });
   revalidatePath("/");
 }
 

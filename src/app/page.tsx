@@ -26,7 +26,7 @@ import {
   Check,
 } from "lucide-react";
 import { LandingPage } from "@/components/LandingPage";
-import { DashboardWidgets } from "@/components/DashboardWidgets";
+import { DashboardWidgets } from "@/components/DashboardWidgets";import { TrackerWidget } from "@/components/TrackerWidget";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -343,92 +343,9 @@ export default async function DashboardPage() {
               </div>
               <span className="text-xs text-gray-500">Today</span>
             </div>
-
+            
             <div className="p-6 flex-1 flex flex-col justify-between">
-              {trackers.length > 0 ? (
-                <div className="space-y-4">
-                  {trackers.map((tracker) => {
-                    const isCompletedToday = tracker.logs?.some((log) => {
-                      const logDateStr = new Date(log.date).toISOString().split("T")[0];
-                      const isToday =
-                        logDateStr === todayDateStr ||
-                        new Date(log.date).toDateString() === new Date().toDateString();
-                      return isToday && log.status === "Successful";
-                    });
-
-                    return (
-                      <div
-                        key={tracker.id}
-                        className={`flex items-center justify-between rounded-lg border p-3 transition ${
-                          isCompletedToday
-                            ? "border-green-200 bg-green-50/50"
-                            : "border-gray-100 bg-gray-50/30 hover:bg-gray-50"
-                        }`}
-                      >
-                        <div className="min-w-0 pr-3">
-                          <p
-                            className={`text-sm font-medium truncate ${
-                              isCompletedToday ? "text-green-900" : "text-gray-900"
-                            }`}
-                          >
-                            {tracker.title}
-                          </p>
-                          <p className="text-xs text-gray-500 mt-0.5">
-                            {tracker.type} • {tracker.frequency}
-                          </p>
-                        </div>
-
-                        <form action={logTrackerEntry}>
-                          <input type="hidden" name="trackerId" value={tracker.id} />
-                          <button
-                            type="submit"
-                            aria-label={`Log ${tracker.title}`}
-                            className={`flex h-8 w-8 items-center justify-center rounded-lg border transition ${
-                              isCompletedToday
-                                ? "border-green-600 bg-green-600 text-white cursor-default"
-                                : "border-gray-300 bg-white text-gray-400 hover:border-gray-400 hover:text-blue-600 cursor-pointer shadow-sm"
-                            }`}
-                          >
-                            <Check className="h-4 w-4" />
-                          </button>
-                        </form>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="py-8 text-center my-auto">
-                  <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-400 mb-3">
-                    <Flame className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm font-medium text-gray-700">No discipline trackers yet</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Add rules and daily habits to track your discipline.
-                  </p>
-                </div>
-              )}
-
-              {/* Quick Add Tracker Form */}
-              <div className="mt-6 border-t border-gray-100 pt-4">
-                <form action={createTracker} className="flex gap-2">
-                  <input
-                    type="text"
-                    name="title"
-                    required
-                    placeholder="New habit or rule..."
-                    className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                  />
-                  <input type="hidden" name="type" value="Positive Habit" />
-                  <input type="hidden" name="frequency" value="Daily" />
-                  <button
-                    type="submit"
-                    className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition shadow-sm"
-                  >
-                    <Plus className="h-3.5 w-3.5" />
-                    Add
-                  </button>
-                </form>
-              </div>
+              <TrackerWidget trackers={trackers} />
             </div>
           </div>
         </div>
