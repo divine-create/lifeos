@@ -1,4 +1,7 @@
-import { CheckCircle2, Zap, Target, Clock, TrendingDown, TrendingUp, Activity as ActivityIcon } from "lucide-react";
+﻿import re
+
+content = """
+import { CheckCircle2, Zap, Target, Clock, TrendingDown, TrendingUp, AlertCircle, Activity as ActivityIcon } from "lucide-react";
 import { getActivities, getTasks, getGoals } from "@/app/actions";
 import { VarianceTable } from "@/components/VarianceTable";
 
@@ -26,7 +29,7 @@ export default async function LogbookPage() {
       type: "Focus" as const,
       title: a.type,
       date: a.createdAt,
-      meta: `${a.actualDuration || 0} mins`,
+      meta: \\ mins\,
     })),
     ...completedTasks.map(t => ({
       id: t.id,
@@ -86,7 +89,7 @@ export default async function LogbookPage() {
               <span className="text-sm font-semibold text-gray-500 dark:text-zinc-400">Total Planned</span>
               <div className="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg"><Target className="h-4 w-4" /></div>
             </div>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">{Math.floor(totalEstimated / 60)}<span className="text-lg font-normal text-gray-500 ml-1">hrs</span> {totalEstimated % 60}<span className="text-lg font-normal text-gray-500 ml-1">m</span></p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{Math.round(totalEstimated / 60)}<span className="text-lg font-normal text-gray-500 ml-1">hrs</span> {totalEstimated % 60}<span className="text-lg font-normal text-gray-500 ml-1">m</span></p>
           </div>
 
           <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 p-5 shadow-sm">
@@ -94,20 +97,20 @@ export default async function LogbookPage() {
               <span className="text-sm font-semibold text-gray-500 dark:text-zinc-400">Total Actual</span>
               <div className="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-lg"><Clock className="h-4 w-4" /></div>
             </div>
-            <p className="text-3xl font-bold text-gray-900 dark:text-white">{Math.floor(totalActual / 60)}<span className="text-lg font-normal text-gray-500 ml-1">hrs</span> {totalActual % 60}<span className="text-lg font-normal text-gray-500 ml-1">m</span></p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{Math.round(totalActual / 60)}<span className="text-lg font-normal text-gray-500 ml-1">hrs</span> {totalActual % 60}<span className="text-lg font-normal text-gray-500 ml-1">m</span></p>
           </div>
 
           <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold text-gray-500 dark:text-zinc-400">Estimation Accuracy</span>
-              <div className={`p-2 rounded-lg ${accuracy >= 80 ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'}`}>
+              <div className={\p-2 rounded-lg \\}>
                 <ActivityIcon className="h-4 w-4" />
               </div>
             </div>
             <div className="flex items-end gap-3">
               <p className="text-3xl font-bold text-gray-900 dark:text-white">{accuracy.toFixed(1)}%</p>
               {tasksWithVariance.length > 0 && (
-                <p className={`text-sm font-medium mb-1 flex items-center ${isUnderestimating ? 'text-red-500' : isOverestimating ? 'text-orange-500' : 'text-green-500'}`}>
+                <p className={\	ext-sm font-medium mb-1 flex items-center \\}>
                   {isUnderestimating ? <><TrendingUp className="h-3 w-3 mr-1"/> Underestimating</> : isOverestimating ? <><TrendingDown className="h-3 w-3 mr-1"/> Overestimating</> : <><CheckCircle2 className="h-3 w-3 mr-1"/> Perfect</>}
                 </p>
               )}
@@ -141,11 +144,8 @@ export default async function LogbookPage() {
               
               <div className="space-y-3">
                 {dayLogs.map((log: LogItem) => (
-                  <div key={`${log.type}-${log.id}`} className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm hover:border-gray-300 dark:hover:border-zinc-600 transition">
-                    <div className={`mt-0.5 flex items-center justify-center h-8 w-8 rounded-full shrink-0 ${
-                      log.type === 'Focus' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' :
-                      log.type === 'Task' ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400' : 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
-                    }`}>
+                  <div key={\\-\\} className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 shadow-sm hover:border-gray-300 dark:hover:border-zinc-600 transition">
+                    <div className={\mt-0.5 flex items-center justify-center h-8 w-8 rounded-full shrink-0 \\}>
                       {log.type === 'Focus' && <Zap className="h-4 w-4" />}
                       {log.type === 'Task' && <CheckCircle2 className="h-4 w-4" />}
                       {log.type === 'Goal' && <Target className="h-4 w-4" />}
@@ -153,13 +153,13 @@ export default async function LogbookPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-[10px] font-bold text-gray-500 dark:text-zinc-500 uppercase tracking-wider">{log.type}</span>
-                        {log.meta && <span className="text-xs text-gray-400 dark:text-zinc-500">• {log.meta}</span>}
-                        <span className="text-xs text-gray-400 dark:text-zinc-500">• {log.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        {log.meta && <span className="text-xs text-gray-400 dark:text-zinc-500">? {log.meta}</span>}
+                        <span className="text-xs text-gray-400 dark:text-zinc-500">? {log.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                       </div>
                       <p className="text-sm font-medium text-gray-900 dark:text-zinc-200">
-                        {log.type === 'Focus' && `Focused on `}
-                        {log.type === 'Task' && `Completed task `}
-                        {log.type === 'Goal' && `Achieved goal `}
+                        {log.type === 'Focus' && \Focused on \}
+                        {log.type === 'Task' && \Completed task \}
+                        {log.type === 'Goal' && \Achieved goal \}
                         <span className="font-bold text-gray-900 dark:text-white">{log.title}</span>
                       </p>
                     </div>
@@ -177,3 +177,8 @@ export default async function LogbookPage() {
     </div>
   );
 }
+"""
+
+with open("src/app/logbook/page.tsx", "w", encoding="utf-8") as f:
+    f.write(content)
+print("Updated logbook/page.tsx")

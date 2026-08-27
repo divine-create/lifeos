@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -67,8 +66,7 @@ export function Sidebar() {
         />
       )}
 
-      <div className={\ixed md:static inset-y-0 left-0 z-50 flex h-full w-[260px] flex-col border-r border-gray-200 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900 
-pt-4 transform transition-transform duration-200 ease-in-out \}>
+      <div className={`fixed md:static inset-y-0 left-0 z-50 flex h-full w-[260px] flex-col border-r border-gray-200 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900 pt-4 transform transition-transform duration-200 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         
         <div className="px-4 mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -98,9 +96,13 @@ pt-4 transform transition-transform duration-200 ease-in-out \}>
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={\group flex items-center gap-3 rounded-lg px-3 py-2 text-[14px] transition-all duration-200 \}
+                      className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-[14px] transition-all duration-200 ${
+                        isActive 
+                          ? "bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 font-medium" 
+                          : "text-gray-700 dark:text-zinc-400 hover:bg-gray-200/50 dark:hover:bg-zinc-800/50 hover:text-gray-900 dark:hover:text-zinc-100"
+                      }`}
                     >
-                      <item.icon className={\h-[18px] w-[18px] \} />
+                      <item.icon className={`h-[18px] w-[18px] ${isActive ? "text-blue-600 dark:text-blue-400" : item.color}`} />
                       {item.name}
                     </Link>
                   );

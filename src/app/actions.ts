@@ -513,3 +513,21 @@ export async function updateGoal(id: string, formData: FormData) {
   revalidatePath("/");
   redirect("/planning");
 }
+export async function updateTaskTimes(formData: FormData) {
+  const userId = await getUserId();
+  if (!userId) throw new Error("Not authenticated");
+  
+  const id = formData.get("id") as string;
+  const estimatedTimeStr = formData.get("estimatedTime") as string;
+  const actualTimeStr = formData.get("actualTime") as string;
+  
+  const estimatedTime = estimatedTimeStr ? parseInt(estimatedTimeStr, 10) : null;
+  const actualTime = actualTimeStr ? parseInt(actualTimeStr, 10) : null;
+
+  await prisma.task.update({
+    where: { id, userId },
+    data: { estimatedTime, actualTime }
+  });
+  
+  revalidatePath("/logbook");
+}
