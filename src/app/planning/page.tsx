@@ -94,7 +94,7 @@ export default async function PlanningHubPage() {
                     </div>
                     
                     <div className="flex flex-col items-end gap-2 w-32 shrink-0">
-                      <form action={deleteAction} onClick={(e) => e.stopPropagation()}>
+                      <form action={deleteAction}>
                         <button type="submit" className="text-gray-400 hover:text-red-600 p-1"><Trash2 className="h-4 w-4" /></button>
                       </form>
                       <div className="w-full mt-2">
