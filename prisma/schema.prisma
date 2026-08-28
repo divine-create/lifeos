@@ -100,6 +100,7 @@ model Goal {
   milestones       Milestone[]
   projects         Project[]
   tasks            Task[]
+  trackers         Tracker[]
 }
 
 model Milestone {
@@ -187,6 +188,10 @@ model Tracker {
   targetValue Float?
   unit        String?
   frequency   String   // Daily, Weekly
+  frequencyDays String?  // e.g. "Mon,Wed,Fri"
+  frequencyTarget Int?   // e.g. 3
+  goalId        String?
+  goal          Goal?    @relation(fields: [goalId], references: [id], onDelete: Cascade)
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
