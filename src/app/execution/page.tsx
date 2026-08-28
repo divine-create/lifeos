@@ -20,21 +20,21 @@ export default async function ExecutionHubPage() {
     <div className="h-full flex flex-col xl:flex-row gap-6 p-4">
       
       {/* COLUMN 1: TASKS (INBOX) */}
-      <div className="flex-1 xl:max-w-md flex flex-col bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-          <h2 className="text-lg font-bold text-gray-900">Task Inbox</h2>
-          <MoreHorizontal className="h-5 w-5 text-gray-400" />
+      <div className="flex-1 xl:max-w-md flex flex-col bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 overflow-hidden">
+        <div className="p-4 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between bg-gray-50 dark:bg-zinc-950/50">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-zinc-100">Task Inbox</h2>
+          <MoreHorizontal className="h-5 w-5 text-gray-400 dark:text-zinc-500" />
         </div>
         
-        <div className="p-4 border-b border-gray-100 bg-white">
-          <form action={createTask} className="relative flex items-center bg-gray-50 rounded-lg border border-gray-200 focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden">
-            <div className="pl-3 text-gray-400"><Plus className="h-4 w-4" /></div>
+        <div className="p-4 border-b border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+          <form action={createTask} className="relative flex items-center bg-gray-50 dark:bg-zinc-950 rounded-lg border border-gray-200 dark:border-zinc-800 focus-within:ring-2 focus-within:ring-blue-500 overflow-hidden">
+            <div className="pl-3 text-gray-400 dark:text-zinc-500"><Plus className="h-4 w-4" /></div>
             <input
               name="title"
               required
               type="text"
               placeholder="Add a new task..."
-              className="flex-1 py-2 px-3 text-sm focus:outline-none bg-transparent text-gray-900 placeholder:text-gray-400"
+              className="flex-1 py-2 px-3 text-sm focus:outline-none bg-transparent text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:text-zinc-500"
             />
             <input type="hidden" name="priority" value="Medium" />
             <button type="submit" className="hidden">Add</button>
@@ -43,7 +43,7 @@ export default async function ExecutionHubPage() {
 
         <div className="flex-1 overflow-y-auto p-2">
           {tasks.length === 0 ? (
-            <div className="text-center p-8 text-gray-400 text-sm">No tasks here.</div>
+            <div className="text-center p-8 text-gray-400 dark:text-zinc-500 text-sm">No tasks here.</div>
           ) : (
             <div className="space-y-6">
               <ul className="space-y-1">
@@ -51,7 +51,7 @@ export default async function ExecutionHubPage() {
                   const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
                   const deleteAction = deleteTask.bind(null, task.id);
                   return (
-                    <li key={task.id} className="group flex flex-col p-2 rounded-lg hover:bg-gray-50 border border-transparent hover:border-gray-100 transition-colors">
+                    <li key={task.id} className="group flex flex-col p-2 rounded-lg hover:bg-gray-50 dark:bg-zinc-950 border border-transparent hover:border-gray-100 dark:border-zinc-800 transition-colors">
                       <div className="flex items-center gap-3">
                         <form action={toggleAction} className="flex-shrink-0">
                           <button type="submit" className="text-gray-300 hover:text-blue-500 mt-0.5"><Circle className="h-4 w-4" /></button>
@@ -60,7 +60,7 @@ export default async function ExecutionHubPage() {
                           <p className="text-sm text-gray-800 truncate">{task.title}</p>
                         </div>
                         <form action={deleteAction} className="opacity-0 group-hover:opacity-100">
-                          <button type="submit" className="text-gray-400 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
+                          <button type="submit" className="text-gray-400 dark:text-zinc-500 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
                         </form>
                       </div>
                       
@@ -90,22 +90,22 @@ export default async function ExecutionHubPage() {
               </ul>
               {completedTasks.length > 0 && (
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-2 mb-2">Completed</h3>
+                  <h3 className="text-xs font-semibold text-gray-400 dark:text-zinc-500 uppercase tracking-wider px-2 mb-2">Completed</h3>
                   <ul className="space-y-1 opacity-60">
                     {completedTasks.map((task) => {
                       const toggleAction = toggleTaskStatus.bind(null, task.id, task.status);
                       const deleteAction = deleteTask.bind(null, task.id);
                       return (
-                        <li key={task.id} className="group flex flex-col p-2 rounded-lg hover:bg-gray-50">
+                        <li key={task.id} className="group flex flex-col p-2 rounded-lg hover:bg-gray-50 dark:bg-zinc-950">
                           <div className="flex items-center gap-3">
                             <form action={toggleAction} className="flex-shrink-0">
                               <button type="submit" className="text-blue-500 mt-0.5"><CheckCircle2 className="h-4 w-4" /></button>
                             </form>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm text-gray-500 line-through truncate">{task.title}</p>
+                              <p className="text-sm text-gray-500 dark:text-zinc-400 line-through truncate">{task.title}</p>
                             </div>
                             <form action={deleteAction} className="opacity-0 group-hover:opacity-100">
-                              <button type="submit" className="text-gray-400 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
+                              <button type="submit" className="text-gray-400 dark:text-zinc-500 hover:text-red-500 p-1"><Trash2 className="h-3.5 w-3.5" /></button>
                             </form>
                           </div>
                           
@@ -113,17 +113,17 @@ export default async function ExecutionHubPage() {
                           {(task.goal || task.project || task.milestone) && (
                             <div className="flex flex-wrap gap-1 mt-1 pl-7 opacity-75">
                               {task.goal && (
-                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:text-zinc-400">
                                   Goal: {task.goal.title}
                                 </span>
                               )}
                               {task.milestone && (
-                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:text-zinc-400">
                                   Milestone: {task.milestone.title}
                                 </span>
                               )}
                               {task.project && (
-                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+                                <span className="inline-flex items-center rounded-sm bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:text-zinc-400">
                                   Project: {task.project.title}
                                 </span>
                               )}
@@ -141,26 +141,26 @@ export default async function ExecutionHubPage() {
       </div>
 
       {/* COLUMN 2: SCHEDULE (TIMELINE) */}
-      <div className="flex-1 xl:max-w-md flex flex-col bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-          <h2 className="text-lg font-bold text-gray-900">Today's Schedule</h2>
-          <Clock className="h-5 w-5 text-gray-400" />
+      <div className="flex-1 xl:max-w-md flex flex-col bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 overflow-hidden">
+        <div className="p-4 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between bg-gray-50 dark:bg-zinc-950/50">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-zinc-100">Today's Schedule</h2>
+          <Clock className="h-5 w-5 text-gray-400 dark:text-zinc-500" />
         </div>
 
-        <div className="p-4 border-b border-gray-100 bg-white">
+        <div className="p-4 border-b border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900">
           <form action={createScheduleSlot} className="flex gap-2">
-            <input name="title" required type="text" placeholder="Block title..." className="flex-1 rounded-md border border-gray-300 px-2 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 bg-white focus:outline-none focus:ring-1 focus:ring-blue-600" />
-            <input name="startTime" required type="time" className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm text-gray-900 bg-white focus:outline-none" />
-            <input name="endTime" required type="time" className="w-24 rounded-md border border-gray-300 px-2 py-1.5 text-sm text-gray-900 bg-white focus:outline-none" />
+            <input name="title" required type="text" placeholder="Block title..." className="flex-1 rounded-md border border-gray-300 dark:border-zinc-700 px-2 py-1.5 text-sm text-gray-900 dark:text-zinc-100 placeholder:text-gray-400 dark:text-zinc-500 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-1 focus:ring-blue-600" />
+            <input name="startTime" required type="time" className="w-24 rounded-md border border-gray-300 dark:border-zinc-700 px-2 py-1.5 text-sm text-gray-900 dark:text-zinc-100 bg-white dark:bg-zinc-900 focus:outline-none" />
+            <input name="endTime" required type="time" className="w-24 rounded-md border border-gray-300 dark:border-zinc-700 px-2 py-1.5 text-sm text-gray-900 dark:text-zinc-100 bg-white dark:bg-zinc-900 focus:outline-none" />
             <button type="submit" className="bg-blue-600 text-white p-1.5 rounded-md hover:bg-blue-700 transition"><Plus className="h-4 w-4" /></button>
           </form>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6">
           {schedule.length === 0 ? (
-            <div className="text-center text-gray-400 text-sm mt-8">No schedule blocks added yet.</div>
+            <div className="text-center text-gray-400 dark:text-zinc-500 text-sm mt-8">No schedule blocks added yet.</div>
           ) : (
-            <div className="relative border-l-2 border-gray-100 ml-2 space-y-6">
+            <div className="relative border-l-2 border-gray-100 dark:border-zinc-800 ml-2 space-y-6">
               {schedule.map((slot) => {
                 const setCompletedAction = updateScheduleSlotStatus.bind(null, slot.id, "completed");
                 const setActiveAction = updateScheduleSlotStatus.bind(null, slot.id, "active");
@@ -173,14 +173,14 @@ export default async function ExecutionHubPage() {
                       slot.status === 'active' ? 'bg-blue-500 animate-pulse' : 'bg-gray-300'
                     }`} />
                     <div className={`rounded-xl border p-3 shadow-sm transition-all ${
-                      slot.status === 'active' ? 'bg-blue-50/50 border-blue-200' : 'bg-white hover:border-gray-300'
+                      slot.status === 'active' ? 'bg-blue-50/50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' : 'bg-white dark:bg-zinc-900 hover:border-gray-300 dark:hover:border-zinc-700 dark:border-zinc-700'
                     }`}>
                       <div className="flex justify-between items-start">
                         <div>
-                          <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                          <div className="text-[11px] font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-wider mb-1">
                             {slot.startTime} - {slot.endTime}
                           </div>
-                          <h3 className={`text-sm font-semibold ${slot.status === 'completed' ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
+                          <h3 className={`text-sm font-semibold ${slot.status === 'completed' ? 'text-gray-400 dark:text-zinc-500 line-through' : 'text-gray-900 dark:text-zinc-100'}`}>
                             {slot.title}
                           </h3>
                         </div>
@@ -196,7 +196,7 @@ export default async function ExecutionHubPage() {
                             </form>
                           )}
                           <form action={deleteAction}>
-                            <button className="text-gray-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded transition opacity-0 group-hover:opacity-100"><Trash2 className="h-3.5 w-3.5" /></button>
+                            <button className="text-gray-400 dark:text-zinc-500 hover:text-red-600 hover:bg-red-50 p-1.5 rounded transition opacity-0 group-hover:opacity-100"><Trash2 className="h-3.5 w-3.5" /></button>
                           </form>
                         </div>
                       </div>
@@ -210,12 +210,12 @@ export default async function ExecutionHubPage() {
       </div>
 
       {/* COLUMN 3: FOCUS TIMER */}
-      <div className="flex-1 xl:max-w-md flex flex-col bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-          <h2 className="text-lg font-bold text-gray-900">Focus Timer</h2>
-          <PlayCircle className="h-5 w-5 text-gray-400" />
+      <div className="flex-1 xl:max-w-md flex flex-col bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 overflow-hidden">
+        <div className="p-4 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between bg-gray-50 dark:bg-zinc-950/50">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-zinc-100">Focus Timer</h2>
+          <PlayCircle className="h-5 w-5 text-gray-400 dark:text-zinc-500" />
         </div>
-        <div className="flex-1 flex items-center justify-center p-6 bg-gray-50/30">
+        <div className="flex-1 flex items-center justify-center p-6 bg-gray-50 dark:bg-zinc-950/30">
           <FocusTimerClient tasks={simplifiedActiveTasks} />
         </div>
       </div>

@@ -113,15 +113,7 @@ export function Sidebar() {
         </nav>
 
         <div className="p-3 border-t border-gray-200 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900 flex flex-col gap-1">
-          {mounted && (
-            <button 
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="flex items-center gap-3 w-full rounded-lg px-3 py-2 text-[14px] text-gray-700 dark:text-zinc-400 hover:bg-gray-200/50 dark:hover:bg-zinc-800/50 transition-colors"
-            >
-              {theme === 'dark' ? <Sun className="h-[18px] w-[18px] text-yellow-500" /> : <Moon className="h-[18px] w-[18px] text-gray-500" />}
-              <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-            </button>
-          )}
+
 
           <Link
             href="/settings"
