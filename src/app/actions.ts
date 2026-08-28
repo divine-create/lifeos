@@ -266,7 +266,7 @@ export async function getTrackers() {
     include: {
       logs: {
         orderBy: { date: "desc" },
-        take: 31,
+        
       },
     },
     orderBy: { createdAt: "desc" },
@@ -277,19 +277,30 @@ export async function createTracker(formData: FormData) {
   const userId = await getUserId();
   if (!userId) throw new Error("Not authenticated");
 
-  const targetValueStr = formData.get("targetValue") as string;
-  const targetValue = targetValueStr ? parseFloat(targetValueStr) : null;
+  const title = formData.get("title") as string;
+  const type = formData.get("type") as string;
+  const targetValue = formData.get("targetValue") as string;
+  const unit = formData.get("unit") as string;
+  const frequency = formData.get("frequency") as string || "DAILY";
+  const frequencyDays = formData.get("frequencyDays") as string;
+  const frequencyTargetStr = formData.get("frequencyTarget") as string;
+  const goalId = formData.get("goalId") as string;
 
   await prisma.tracker.create({
     data: {
       userId,
-      title: formData.get("title") as string,
-      type: (formData.get("type") as string) || "BOOLEAN",
-      frequency: (formData.get("frequency") as string) || "DAILY",
-      targetValue,
-      unit: (formData.get("unit") as string) || null,
+      title,
+      type,
+      targetValue: targetValue ? parseFloat(targetValue) : null,
+      unit,
+      frequency,
+      frequencyDays: frequencyDays || null,
+      frequencyTarget: frequencyTargetStr ? parseInt(frequencyTargetStr, 10) : null,
+      goalId: goalId || null
     },
   });
+
+  revalidatePath("/trackers");
   revalidatePath("/");
 }
 
