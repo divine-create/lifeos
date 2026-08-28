@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -97,7 +96,7 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                   <div className="pr-2">
                     <h3 className="font-bold text-gray-900 dark:text-zinc-100 line-clamp-1">{tracker.title}</h3>
                     <p className="text-[10px] uppercase tracking-wider text-gray-500 dark:text-zinc-500 font-medium mt-0.5">
-                      {tracker.type} {tracker.targetValue ? •   : ''}
+                      {tracker.type} {tracker.targetValue ? `• ${tracker.targetValue} ${tracker.unit||''}` : ''}
                     </p>
                   </div>
                   <button onClick={() => setActiveModal(tracker.id)} className="text-gray-400 hover:text-blue-500 transition p-1">
@@ -114,9 +113,15 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                       {isDone && <input type="hidden" name="toggleOff" value="true" />}
                       <button 
                         type="submit" 
-                        className={h-20 w-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 }
+                        className={`h-20 w-20 rounded-full flex items-center justify-center border-4 transition-all duration-300 ${
+                          isDone 
+                            ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-105' 
+                            : isSkipped 
+                              ? 'bg-zinc-200 border-zinc-200 dark:bg-zinc-700 dark:border-zinc-700 text-zinc-500' 
+                              : 'bg-transparent border-gray-200 dark:border-zinc-700 text-gray-300 dark:text-zinc-600 hover:border-emerald-200 dark:hover:border-emerald-900/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/10'
+                        }`}
                       >
-                        {isSkipped ? <SkipForward className="h-8 w-8" /> : <Check className={h-10 w-10 } strokeWidth={isDone ? 3 : 2} />}
+                        {isSkipped ? <SkipForward className="h-8 w-8" /> : <Check className={`h-10 w-10 ${isDone ? 'opacity-100' : 'opacity-50'}`} strokeWidth={isDone ? 3 : 2} />}
                       </button>
                     </form>
                   ) : (
@@ -148,11 +153,11 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
                       if (s === "Successful") color = "bg-emerald-500";
                       else if (s === "Skipped") color = "bg-gray-400 dark:bg-zinc-500";
                       else if (s === "Failed") color = "bg-red-500";
-                      return <div key={i} className={h-2.5 w-2.5 rounded-full } />
+                      return <div key={i} className={`h-2.5 w-2.5 rounded-full ${color}`} />
                     })}
                   </div>
                   <div className="flex items-center gap-1.5 font-bold text-xs" title="Current Streak">
-                    <Flame className={h-4 w-4 } />
+                    <Flame className={`h-4 w-4 ${stats.currentStreak > 0 ? 'text-orange-500' : 'text-gray-400 dark:text-zinc-600'}`} />
                     <span className={stats.currentStreak > 0 ? 'text-gray-900 dark:text-zinc-100' : 'text-gray-400 dark:text-zinc-600'}>{stats.currentStreak}</span>
                   </div>
                 </div>
