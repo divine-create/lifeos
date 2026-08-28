@@ -1,4 +1,6 @@
+﻿import re
 
+content = """
 "use client";
 
 import { useState } from "react";
@@ -232,3 +234,8 @@ export function TrackerWidget({ trackers }: { trackers: any[] }) {
     </div>
   );
 }
+"""
+
+with open("src/components/TrackerWidget.tsx", "w", encoding="utf-8") as f:
+    f.write(content)
+print("Updated TrackerWidget.tsx to App-Style Cards")
